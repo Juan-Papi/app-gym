@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.Cliente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClienteDatos {
     private SQLiteDatabase db;
 
@@ -84,5 +87,55 @@ public class ClienteDatos {
         }
         return null;
     }
+
+    public List<Cliente> obtenerTodosLosClientes() {
+        List<Cliente> listaClientes = new ArrayList<>();
+        Cursor cursor = db.query("Cliente", null, null, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Cliente cliente = new Cliente();
+
+                int idIndex = cursor.getColumnIndex("id");
+                if (idIndex != -1) {
+                    cliente.setId(cursor.getInt(idIndex));
+                }
+
+                int nombreIndex = cursor.getColumnIndex("nombre");
+                if (nombreIndex != -1) {
+                    cliente.setNombre(cursor.getString(nombreIndex));
+                }
+
+                int apellidoIndex = cursor.getColumnIndex("apellido");
+                if (apellidoIndex != -1) {
+                    cliente.setApellido(cursor.getString(apellidoIndex));
+                }
+
+                int edadIndex = cursor.getColumnIndex("edad");
+                if (edadIndex != -1) {
+                    cliente.setEdad(cursor.getInt(edadIndex));
+                }
+
+                int estadoIndex = cursor.getColumnIndex("estado");
+                if (estadoIndex != -1) {
+                    cliente.setEstado(cursor.getString(estadoIndex));
+                }
+
+                int fechaEntradaIndex = cursor.getColumnIndex("fechaEntrada");
+                if (fechaEntradaIndex != -1) {
+                    cliente.setFechaEntrada(cursor.getString(fechaEntradaIndex));
+                }
+
+                int obsIndex = cursor.getColumnIndex("obs");
+                if (obsIndex != -1) {
+                    cliente.setObs(cursor.getString(obsIndex));
+                }
+
+                listaClientes.add(cliente);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return listaClientes;
+    }
+
 
 }

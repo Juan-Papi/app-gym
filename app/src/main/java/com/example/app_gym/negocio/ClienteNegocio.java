@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.datos.ClienteDatos;
 import com.example.app_gym.models.Cliente;
 
+import java.util.List;
+
 public class ClienteNegocio {
     private ClienteDatos clienteDatos;
 
@@ -30,5 +32,9 @@ public class ClienteNegocio {
     // Método para obtener un cliente por su ID
     public Cliente obtenerCliente(int clienteId) {
         return clienteDatos.obtenerCliente(clienteId);
+    }
+
+    public List<Cliente> obtenerTodosLosClientes() {
+        return clienteDatos.obtenerTodosLosClientes();
     }
 }
