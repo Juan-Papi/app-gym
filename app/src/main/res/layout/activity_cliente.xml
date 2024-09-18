@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Campo Nombre -->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NUEVO CLIENTE"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:hint="Nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Campo Apellido -->
+        <EditText
+            android:id="@+id/etApellido"
+            android:hint="Apellido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Campo Edad -->
+        <EditText
+            android:id="@+id/etEdad"
+            android:hint="Edad"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Campo Estado -->
+        <EditText
+            android:id="@+id/etEstado"
+            android:hint="Estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Campo Fecha Entrada -->
+        <EditText
+            android:id="@+id/etFechaEntrada"
+            android:hint="Fecha de Entrada (YYYY-MM-DD)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Campo Observaciones -->
+        <EditText
+            android:id="@+id/etObs"
+            android:hint="Observaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Botón Guardar Cliente -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:text="Guardar Cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

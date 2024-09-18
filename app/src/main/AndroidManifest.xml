@@ -21,6 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.CategoriaActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.VideoActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.EjercicioActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.ClienteActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

@@ -5,16 +5,18 @@ public class Ejercicio {
     private String nombre;
     private String descripcion;
     private int categoriaId; // Relación con Categoria
+    private int videoId;     // Relación con Video
 
     // Constructor vacío
     public Ejercicio() {}
 
     // Constructor con todos los atributos
-    public Ejercicio(int id, String nombre, String descripcion, int categoriaId) {
+    public Ejercicio(int id, String nombre, String descripcion, int categoriaId, int videoId) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoriaId = categoriaId;
+        this.videoId = videoId;
     }
 
     // Getters y Setters
@@ -49,5 +51,12 @@ public class Ejercicio {
     public void setCategoriaId(int categoriaId) {
         this.categoriaId = categoriaId;
     }
-}
 
+    public int getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(int videoId) {
+        this.videoId = videoId;
+    }
+}

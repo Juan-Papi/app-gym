@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.models.Categoria;
 import com.example.app_gym.negocio.CategoriaNegocio;
 
+import java.util.List;
+
 public class CategoriaController {
     private CategoriaNegocio categoriaNegocio;
 
@@ -30,5 +32,10 @@ public class CategoriaController {
     // Método para obtener una categoría por su ID
     public Categoria obtenerCategoria(int categoriaId) {
         return categoriaNegocio.obtenerCategoria(categoriaId);
+    }
+
+    // Llama a la capa de negocio para obtener todas las categorías
+    public List<Categoria> obtenerTodasLasCategorias() {
+        return categoriaNegocio.obtenerTodasLasCategorias();
     }
 }

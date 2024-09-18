@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.Video;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VideoDatos {
     private SQLiteDatabase db;
 
@@ -17,7 +20,6 @@ public class VideoDatos {
         ContentValues values = new ContentValues();
         values.put("descripcion", video.getDescripcion());
         values.put("videoUrl", video.getVideoUrl());
-        values.put("ejercicioId", video.getEjercicioId());
         return db.insert("Video", null, values);
     }
 
@@ -25,7 +27,6 @@ public class VideoDatos {
         ContentValues values = new ContentValues();
         values.put("descripcion", video.getDescripcion());
         values.put("videoUrl", video.getVideoUrl());
-        values.put("ejercicioId", video.getEjercicioId());
         return db.update("Video", values, "id = ?", new String[]{String.valueOf(video.getId())});
     }
 
@@ -53,14 +54,42 @@ public class VideoDatos {
                 video.setVideoUrl(cursor.getString(videoUrlIndex));
             }
 
-            int ejercicioIdIndex = cursor.getColumnIndex("ejercicioId");
-            if (ejercicioIdIndex >= 0) {
-                video.setEjercicioId(cursor.getInt(ejercicioIdIndex));
-            }
-
             cursor.close();
             return video;
         }
         return null;
+    }
+
+    // Método para obtener todos los videos desde la base de datos
+    public List<Video> obtenerTodosLosVideos() {
+        List<Video> listaVideos = new ArrayList<>();
+        Cursor cursor = db.query("Video", null, null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Video video = new Video();
+
+                // Proteger el acceso a los índices de columnas
+                int idIndex = cursor.getColumnIndex("id");
+                if (idIndex >= 0) {
+                    video.setId(cursor.getInt(idIndex));
+                }
+
+                int descripcionIndex = cursor.getColumnIndex("descripcion");
+                if (descripcionIndex >= 0) {
+                    video.setDescripcion(cursor.getString(descripcionIndex));
+                }
+
+                int urlIndex = cursor.getColumnIndex("video_url");
+                if (urlIndex >= 0) {
+                    video.setVideoUrl(cursor.getString(urlIndex));
+                }
+
+                listaVideos.add(video);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return listaVideos;
     }
 }

@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.datos.VideoDatos;
 import com.example.app_gym.models.Video;
 
+import java.util.List;
+
 public class VideoNegocio {
     private VideoDatos videoDatos;
 
@@ -30,5 +32,10 @@ public class VideoNegocio {
     // Método para obtener un video por su ID
     public Video obtenerVideo(int videoId) {
         return videoDatos.obtenerVideo(videoId);
+    }
+
+    // Llama a la capa de datos para obtener todos los videos
+    public List<Video> obtenerTodosLosVideos() {
+        return videoDatos.obtenerTodosLosVideos();
     }
 }

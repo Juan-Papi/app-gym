@@ -42,11 +42,8 @@ public class Video {
         this.videoUrl = videoUrl;
     }
 
-    public int getEjercicioId() {
-        return ejercicioId;
-    }
-
-    public void setEjercicioId(int ejercicioId) {
-        this.ejercicioId = ejercicioId;
+    @Override
+    public String toString() {
+        return descripcion; // Esto es lo que mostrará el Spinner
     }
 }
