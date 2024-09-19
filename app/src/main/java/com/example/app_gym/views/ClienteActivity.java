@@ -1,6 +1,7 @@
 package com.example.app_gym.views;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ public class ClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
+
+
         // Inicializa la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -35,6 +38,12 @@ public class ClienteActivity extends AppCompatActivity {
         etFechaEntrada = findViewById(R.id.etFechaEntrada);
         etObs = findViewById(R.id.etObs);
         btnGuardar = findViewById(R.id.btnGuardar);
+
+        // Configuración del botón Volver
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> {
+            finish();  // Cierra la actividad actual y vuelve a la actividad anterior
+        });
 
         // Configura el botón Guardar
         btnGuardar.setOnClickListener(v -> {
@@ -66,6 +75,10 @@ public class ClienteActivity extends AppCompatActivity {
             etEstado.setText("");
             etFechaEntrada.setText("");
             etObs.setText("");
+
+            // Devolver un resultado a la actividad anterior
+            setResult(RESULT_OK);  // Indica que la operación fue exitosa
+            finish();  // Cierra la actividad y vuelve a MainActivity
         });
     }
 }
