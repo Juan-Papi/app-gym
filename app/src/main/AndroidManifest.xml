@@ -41,6 +41,10 @@
             android:name=".views.IndexEjercicioActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.IndexVideoActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

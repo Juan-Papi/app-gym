@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Título VIDEOS -->
+    <TextView
+        android:id="@+id/tvTituloVideos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIDEOS"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Filtros para buscar videos -->
+    <EditText
+        android:id="@+id/etFiltroBuscarVideos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="FILTROS PARA BUSCAR VIDEOS"
+        android:padding="8dp"
+        android:minHeight="48dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloVideos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón NUEVO VIDEO -->
+    <Button
+        android:id="@+id/btnNuevoVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NUEVO VIDEO"
+        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarVideos"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Título de la sección de VIDEOS -->
+    <TextView
+        android:id="@+id/tvVideos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIDEOS"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/btnNuevoVideo"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <!-- RecyclerView para mostrar la lista de videos -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerVideos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvVideos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
