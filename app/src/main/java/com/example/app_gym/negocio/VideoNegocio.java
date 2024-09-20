@@ -38,4 +38,9 @@ public class VideoNegocio {
     public List<Video> obtenerTodosLosVideos() {
         return videoDatos.obtenerTodosLosVideos();
     }
+
+    // Método para obtener el video por su ID
+    public Video obtenerVideoPorId(int videoId) {
+        return videoDatos.encontrarPorId(videoId);
+    }
 }

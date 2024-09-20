@@ -38,4 +38,9 @@ public class CategoriaNegocio {
     public List<Categoria> obtenerTodasLasCategorias() {
         return categoriaDatos.obtenerTodasLasCategorias();
     }
+
+    // Método para obtener la categoría por su ID
+    public Categoria obtenerCategoriaPorId(int categoriaId) {
+        return categoriaDatos.encontrarPorId(categoriaId);
+    }
 }

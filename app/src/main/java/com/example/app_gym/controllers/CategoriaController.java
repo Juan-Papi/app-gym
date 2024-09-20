@@ -3,6 +3,7 @@ package com.example.app_gym.controllers;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.Categoria;
+import com.example.app_gym.models.Video;
 import com.example.app_gym.negocio.CategoriaNegocio;
 
 import java.util.List;

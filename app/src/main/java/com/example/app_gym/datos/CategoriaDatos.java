@@ -81,4 +81,19 @@ public class CategoriaDatos {
         return listaCategorias;
     }
 
+    // Método para encontrar una categoría por su ID
+    public Categoria encontrarPorId(int categoriaId) {
+        Categoria categoria = null;
+        Cursor cursor = db.rawQuery("SELECT * FROM Categoria WHERE id = ?", new String[]{String.valueOf(categoriaId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            categoria = new Categoria();
+            categoria.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+            categoria.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
+            cursor.close();
+        }
+
+        return categoria;
+    }
+
 }

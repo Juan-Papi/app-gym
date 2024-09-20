@@ -92,4 +92,20 @@ public class VideoDatos {
 
         return listaVideos;
     }
+
+    // Método para encontrar un video por su ID
+    public Video encontrarPorId(int videoId) {
+        Video video = null;
+        Cursor cursor = db.rawQuery("SELECT * FROM Video WHERE id = ?", new String[]{String.valueOf(videoId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            video = new Video();
+            video.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+            video.setDescripcion(cursor.getString(cursor.getColumnIndexOrThrow("descripcion")));
+            video.setVideoUrl(cursor.getString(cursor.getColumnIndexOrThrow("videoUrl")));
+            cursor.close();
+        }
+
+        return video;
+    }
 }

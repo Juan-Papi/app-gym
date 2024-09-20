@@ -38,4 +38,5 @@ public class VideoController {
     public List<Video> obtenerTodosLosVideos() {
         return videoNegocio.obtenerTodosLosVideos();
     }
+
 }
