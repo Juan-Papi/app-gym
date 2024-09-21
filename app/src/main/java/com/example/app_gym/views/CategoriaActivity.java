@@ -33,22 +33,25 @@ public class CategoriaActivity extends AppCompatActivity {
         etNombreCategoria = findViewById(R.id.etNombreCategoria);
         btnGuardarCategoria = findViewById(R.id.btnGuardarCategoria);
 
+        Button btnVolver = findViewById(R.id.btnVolverToIndexc);
+        btnVolver.setOnClickListener(v -> {
+            // Cerrar esta actividad
+            finish();
+        });
+
         // Configura el botón Guardar
         btnGuardarCategoria.setOnClickListener(v -> {
-            // Captura el valor del formulario
             String nombreCategoria = etNombreCategoria.getText().toString();
 
             if (!nombreCategoria.isEmpty()) {
-                // Crea una nueva categoría
                 Categoria nuevaCategoria = new Categoria();
                 nuevaCategoria.setNombre(nombreCategoria);
 
-                // Guarda la categoría en la base de datos
                 categoriaController.crearNuevaCategoria(nuevaCategoria);
                 Toast.makeText(CategoriaActivity.this, "Categoría guardada", Toast.LENGTH_SHORT).show();
 
-                // Limpiar el formulario después de guardar
-                etNombreCategoria.setText("");
+                // Finalizar la actividad y volver a IndexCategoriaActivity
+                finish();
             } else {
                 Toast.makeText(CategoriaActivity.this, "Por favor, ingresa un nombre para la categoría", Toast.LENGTH_SHORT).show();
             }

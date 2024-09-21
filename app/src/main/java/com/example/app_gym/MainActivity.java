@@ -15,6 +15,7 @@ import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.views.ClienteActivity;
 import com.example.app_gym.views.ClienteAdapter;
+import com.example.app_gym.views.IndexEjercicioActivity;
 
 import java.util.List;
 
@@ -53,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
         btnNuevoCliente.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ClienteActivity.class);
             startActivityForResult(intent, REQUEST_CODE_ADD_CLIENTE);  // Esperar un resultado de ClienteActivity
+        });
+
+        Button btnEjercicios = findViewById(R.id.btnEjercicios);
+        btnEjercicios.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, IndexEjercicioActivity.class);
+            startActivity(intent);
         });
     }
 

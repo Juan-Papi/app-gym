@@ -33,7 +33,12 @@ public class VideoActivity extends AppCompatActivity {
         etUrlVideo = findViewById(R.id.etUrlVideo);
         btnGuardarVideo = findViewById(R.id.btnGuardarVideo);
 
-        // Acción al presionar el botón Guardar
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> {
+            // Cerrar esta actividad
+            finish();
+        });
+
         btnGuardarVideo.setOnClickListener(v -> {
             String descripcion = etDescripcionVideo.getText().toString();
             String url = etUrlVideo.getText().toString();
@@ -48,9 +53,8 @@ public class VideoActivity extends AppCompatActivity {
 
                 if (resultado != -1) {
                     Toast.makeText(VideoActivity.this, "Video guardado", Toast.LENGTH_SHORT).show();
-                    // Limpiar el formulario después de guardar
-                    etDescripcionVideo.setText("");
-                    etUrlVideo.setText("");
+                    setResult(RESULT_OK); // Indica que el video fue guardado exitosamente
+                    finish(); // Cierra esta actividad y regresa
                 } else {
                     Toast.makeText(VideoActivity.this, "Error al guardar el video", Toast.LENGTH_SHORT).show();
                 }

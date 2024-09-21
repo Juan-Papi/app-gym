@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -20,18 +21,20 @@
         android:layout_marginBottom="16dp" />
 
     <!-- Filtros para buscar categorías -->
+
+    <!-- Botón NUEVA CATEGORÍA -->
     <EditText
         android:id="@+id/etFiltroBuscarCategorias"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="FILTROS PARA BUSCAR CATEGORÍAS"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTituloCategorias"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloCategorias" />
 
-    <!-- Botón NUEVA CATEGORÍA -->
     <Button
         android:id="@+id/btnNuevaCategoria"
         android:layout_width="wrap_content"
@@ -63,5 +66,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnVolverToE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Volver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

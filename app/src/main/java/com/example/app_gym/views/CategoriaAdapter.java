@@ -34,7 +34,6 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
         Categoria categoria = listaCategorias.get(position);
         holder.tvNombreCategoria.setText(categoria.getNombre());
 
-        // Aquí puedes agregar funcionalidad adicional a los botones si es necesario
         holder.btnVer.setOnClickListener(v -> {
             // Acción para ver categoría
         });
@@ -49,6 +48,11 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
     @Override
     public int getItemCount() {
         return listaCategorias.size();
+    }
+
+    public void actualizarCategorias(List<Categoria> nuevasCategorias) {
+        listaCategorias = nuevasCategorias;
+        notifyDataSetChanged();
     }
 
     public static class CategoriaViewHolder extends RecyclerView.ViewHolder {

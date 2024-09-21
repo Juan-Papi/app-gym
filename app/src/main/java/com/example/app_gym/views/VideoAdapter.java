@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
+import com.example.app_gym.models.Categoria;
 import com.example.app_gym.models.Video;
 
 import java.util.List;
@@ -41,6 +42,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     @Override
     public int getItemCount() {
         return listaVideos.size();
+    }
+
+    public void actualizarVideos(List<Video> nuevosVideos) {
+        listaVideos = nuevosVideos;
+        notifyDataSetChanged();
     }
 
     public static class VideoViewHolder extends RecyclerView.ViewHolder {

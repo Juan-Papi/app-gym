@@ -62,18 +62,19 @@ public class EjercicioActivity extends AppCompatActivity {
         adapterVideos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerVideo.setAdapter(adapterVideos);
 
-        // Configura el botón Guardar
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> {
+            // Cerrar esta actividad
+            finish();
+        });
+
         btnGuardarEjercicio.setOnClickListener(v -> {
             String nombre = etNombreEjercicio.getText().toString();
             String descripcion = etDescripcionEjercicio.getText().toString();
-
-            // Obtener el ID de la categoría seleccionada
             Categoria categoriaSeleccionada = (Categoria) spinnerCategoria.getSelectedItem();
-            int categoriaId = categoriaSeleccionada.getId();
-
-            // Obtener el ID del video seleccionado
             Video videoSeleccionado = (Video) spinnerVideo.getSelectedItem();
-            int videoId = videoSeleccionado.getId();
+            int categoriaId = categoriaSeleccionada != null ? categoriaSeleccionada.getId() : -1;
+            int videoId = videoSeleccionado != null ? videoSeleccionado.getId() : -1;
 
             Ejercicio nuevoEjercicio = new Ejercicio();
             nuevoEjercicio.setNombre(nombre);
@@ -81,8 +82,16 @@ public class EjercicioActivity extends AppCompatActivity {
             nuevoEjercicio.setCategoriaId(categoriaId);
             nuevoEjercicio.setVideoId(videoId);
 
-            ejercicioController.crearNuevoEjercicio(nuevoEjercicio);
-            Toast.makeText(EjercicioActivity.this, "Ejercicio guardado", Toast.LENGTH_SHORT).show();
+            long result = ejercicioController.crearNuevoEjercicio(nuevoEjercicio);
+            if (result != -1) {
+                Toast.makeText(this, "Ejercicio guardado", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);  // Indica que se guardó correctamente
+            } else {
+                Toast.makeText(this, "Error al guardar el ejercicio", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED);
+            }
+            finish();  // Finaliza la actividad y vuelve a la anterior
         });
+
     }
 }
