@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.RutinaSemanal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RutinaSemanalDatos {
     private SQLiteDatabase db;
 
@@ -62,5 +65,27 @@ public class RutinaSemanalDatos {
             return rutinaSemanal;
         }
         return null;
+    }
+
+    public List<RutinaSemanal> obtenerRutinasSemanalesDeCliente(int clienteId) {
+        List<RutinaSemanal> rutinasSemanales = new ArrayList<>();
+
+        String query = "SELECT * FROM RutinaSemanal WHERE clienteId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(clienteId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                RutinaSemanal rutina = new RutinaSemanal();
+                rutina.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                rutina.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
+                rutina.setFecha(cursor.getString(cursor.getColumnIndexOrThrow("fecha")));
+                rutina.setClienteId(cursor.getInt(cursor.getColumnIndexOrThrow("clienteId")));
+
+                rutinasSemanales.add(rutina);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return rutinasSemanales;
     }
 }

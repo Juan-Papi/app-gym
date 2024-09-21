@@ -49,6 +49,10 @@
             android:name=".views.IndexCategoriaActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.IndexSemanaActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

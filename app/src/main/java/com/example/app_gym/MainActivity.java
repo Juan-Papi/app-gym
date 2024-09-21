@@ -16,6 +16,7 @@ import com.example.app_gym.models.Cliente;
 import com.example.app_gym.views.ClienteActivity;
 import com.example.app_gym.views.ClienteAdapter;
 import com.example.app_gym.views.IndexEjercicioActivity;
+import com.example.app_gym.views.IndexSemanaActivity;
 
 import java.util.List;
 
@@ -65,7 +66,10 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
 
     @Override
     public void onVerClick(int position) {
-        // Acción para ver el cliente (aún por implementar)
+        Cliente cliente = listaClientes.get(position);
+        Intent intent = new Intent(MainActivity.this, IndexSemanaActivity.class);
+        intent.putExtra("cliente_id", cliente.getId()); // Pasar el ID del cliente
+        startActivity(intent);
     }
 
     @Override
