@@ -100,4 +100,21 @@ public class IndexDiaActivity extends AppCompatActivity {
                 "Se unió: " + cliente.getFechaEntrada();
         tvInformacionCliente.setText(informacion);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Volver a cargar la lista de rutinas diarias
+            actualizarListaRutinasDiarias();
+        }
+    }
+
+    // Método para actualizar la lista de rutinas diarias
+    private void actualizarListaRutinasDiarias() {
+        listaRutinasDiarias.clear(); // Limpiar la lista actual
+        listaRutinasDiarias.addAll(rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId)); // Agregar los elementos actualizados
+        rutinaDiariaAdapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
+    }
+
 }
