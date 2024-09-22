@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.RutinaDiaria;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RutinaDiariaDatos {
     private SQLiteDatabase db;
 
@@ -62,5 +65,26 @@ public class RutinaDiariaDatos {
             return rutinaDiaria;
         }
         return null;
+    }
+
+    public List<RutinaDiaria> obtenerRutinasDiariasDeSemana(int semanaId) {
+        List<RutinaDiaria> listaRutinasDiarias = new ArrayList<>();
+        Cursor cursor = db.query("RutinaDiaria", null, "rutinaSemanalId = ?",
+                new String[]{String.valueOf(semanaId)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                RutinaDiaria rutinaDiaria = new RutinaDiaria();
+                rutinaDiaria.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                rutinaDiaria.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
+                rutinaDiaria.setFecha(cursor.getString(cursor.getColumnIndexOrThrow("fecha")));
+                rutinaDiaria.setRutinaSemanalId(cursor.getInt(cursor.getColumnIndexOrThrow("rutinaSemanalId")));
+
+                listaRutinasDiarias.add(rutinaDiaria);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return listaRutinasDiarias;
     }
 }

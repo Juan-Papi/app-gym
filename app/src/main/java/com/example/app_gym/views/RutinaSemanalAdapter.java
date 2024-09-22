@@ -1,5 +1,7 @@
 package com.example.app_gym.views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,19 +9,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.RutinaSemanalController;
 import com.example.app_gym.models.RutinaSemanal;
+
 import java.util.List;
 
 public class RutinaSemanalAdapter extends RecyclerView.Adapter<RutinaSemanalAdapter.RutinaSemanalViewHolder> {
 
     private List<RutinaSemanal> listaRutinasSemanales;
-    private RutinaSemanalController rutinaSemanalController;
+    private Context context;
+    private int clienteId;
 
-    public RutinaSemanalAdapter(List<RutinaSemanal> listaRutinasSemanales, RutinaSemanalController rutinaSemanalController) {
+    public RutinaSemanalAdapter(List<RutinaSemanal> listaRutinasSemanales, Context context, int clienteId) {
         this.listaRutinasSemanales = listaRutinasSemanales;
-        this.rutinaSemanalController = rutinaSemanalController;
+        this.context = context;
+        this.clienteId = clienteId;
     }
 
     @NonNull
@@ -33,28 +38,15 @@ public class RutinaSemanalAdapter extends RecyclerView.Adapter<RutinaSemanalAdap
     public void onBindViewHolder(@NonNull RutinaSemanalViewHolder holder, int position) {
         RutinaSemanal rutinaSemanal = listaRutinasSemanales.get(position);
 
-        // Obtener la rutina semanal completa usando el controlador si se necesita más información
-        RutinaSemanal rutinaDetalles = rutinaSemanalController.obtenerRutinaSemanal(rutinaSemanal.getId());
+        holder.tvNombreRutina.setText(rutinaSemanal.getNombre());
+        holder.tvFechaInicio.setText("Fecha de inicio: " + rutinaSemanal.getFecha());
 
-        // Asignar valores a los elementos del ViewHolder
-        holder.tvNombreRutina.setText(rutinaDetalles.getNombre());
-        holder.tvFechaInicio.setText("Fecha inicio: " + rutinaDetalles.getFecha());
-
-        // Configurar botones para cada acción
+        // Configurar el evento de clic para el botón "Ver"
         holder.btnVer.setOnClickListener(v -> {
-            // Acción para ver la rutina
-        });
-
-        holder.btnEditar.setOnClickListener(v -> {
-            // Acción para editar la rutina
-        });
-
-        holder.btnPdf.setOnClickListener(v -> {
-            // Acción para generar PDF de la rutina
-        });
-
-        holder.btnEliminar.setOnClickListener(v -> {
-            // Acción para eliminar la rutina
+            Intent intent = new Intent(context, IndexDiaActivity.class);
+            intent.putExtra("cliente_id", clienteId); // Pasar cliente_id a la siguiente actividad
+            intent.putExtra("rutina_semanal_id", rutinaSemanal.getId()); // Pasar también el ID de la rutina semanal
+            context.startActivity(intent);
         });
     }
 

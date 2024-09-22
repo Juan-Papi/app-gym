@@ -59,8 +59,9 @@ public class IndexSemanaActivity extends AppCompatActivity {
 
         // Obtener la lista de rutinas semanales del cliente y configurar el adaptador
         listaRutinasSemanales = rutinaSemanalController.obtenerRutinasSemanalesDeCliente(clienteId);
-        rutinaSemanalAdapter = new RutinaSemanalAdapter(listaRutinasSemanales, rutinaSemanalController);
+        rutinaSemanalAdapter = new RutinaSemanalAdapter(listaRutinasSemanales, this, clienteId);
         recyclerSemanas.setAdapter(rutinaSemanalAdapter);
+
 
         // Configurar el botón "Nueva Semana" para navegar a SemanaActivity
         Button btnNuevaSemana = findViewById(R.id.btnNuevaSemana);

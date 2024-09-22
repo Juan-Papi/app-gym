@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.datos.RutinaDiariaDatos;
 import com.example.app_gym.models.RutinaDiaria;
 
+import java.util.List;
+
 public class RutinaDiariaNegocio {
     private RutinaDiariaDatos rutinaDiariaDatos;
 
@@ -30,5 +32,9 @@ public class RutinaDiariaNegocio {
     // Método para obtener una rutina diaria por su ID
     public RutinaDiaria obtenerRutinaDiaria(int rutinaDiariaId) {
         return rutinaDiariaDatos.obtenerRutinaDiaria(rutinaDiariaId);
+    }
+
+    public List<RutinaDiaria> obtenerRutinasDiariasDeSemana(int semanaId) {
+        return rutinaDiariaDatos.obtenerRutinasDiariasDeSemana(semanaId);
     }
 }

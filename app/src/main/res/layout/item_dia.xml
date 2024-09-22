@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/background_rounded_corners"
+    android:layout_marginBottom="16dp">
+
+    <!-- Nombre del Día -->
+    <TextView
+        android:id="@+id/tvNombreDia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nombre del Día"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Fecha del Día -->
+    <TextView
+        android:id="@+id/tvFecha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fecha: 2024-09-01"
+        app:layout_constraintTop_toBottomOf="@id/tvNombreDia"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp" />
+
+    <!-- Contenedor para los botones en una sola fila -->
+    <LinearLayout
+        android:id="@+id/llBotonesDia"
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvFecha"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:weightSum="4">
+
+        <!-- Botón Ver -->
+        <Button
+            android:id="@+id/btnVer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Ver"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
+
+        <!-- Botón Editar -->
+        <Button
+            android:id="@+id/btnEditar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Editar"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
+
+        <!-- Botón PDF -->
+        <Button
+            android:id="@+id/btnPdf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PDF"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
+
+        <!-- Botón Eliminar -->
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Eliminar"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

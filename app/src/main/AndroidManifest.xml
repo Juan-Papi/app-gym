@@ -65,6 +65,14 @@
             android:name=".views.MembresiaActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.IndexDiaActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.DiaActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
