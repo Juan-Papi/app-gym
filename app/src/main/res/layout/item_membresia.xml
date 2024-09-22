@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:background="@drawable/background_rounded_corners">
+    android:background="@drawable/background_rounded_corners"
+    android:layout_marginBottom="16dp">
 
     <!-- Fecha de inicio de la membresía -->
     <TextView
@@ -28,41 +29,59 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="4dp" />
 
-    <!-- Botones de acción (Ver, Editar, Eliminar, PDF) -->
+    <!-- Contenedor para los botones -->
     <LinearLayout
+        android:id="@+id/llBotones"
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvFechaFin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:weightSum="4">
 
+        <!-- Botón Ver -->
         <Button
             android:id="@+id/btnVer"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Ver" />
+            android:text="Ver"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
 
+        <!-- Botón Editar -->
         <Button
             android:id="@+id/btnEditar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Editar"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
 
+        <!-- Botón PDF -->
         <Button
             android:id="@+id/btnPdf"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="PDF"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
 
+        <!-- Botón Eliminar -->
         <Button
             android:id="@+id/btnEliminar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="E"
-            android:layout_marginStart="8dp" />
+            android:text="Eliminar"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:padding="4dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

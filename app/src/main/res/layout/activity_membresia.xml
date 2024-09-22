@@ -8,19 +8,22 @@
     android:padding="16dp">
 
     <!-- Título de Membresía -->
+
+    <!-- Información del Cliente -->
+
     <TextView
         android:id="@+id/tvTituloMembresia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="MEMBRESÍA"
+        android:text="MEMBRESIA"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.586"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Información del Cliente -->
     <TextView
         android:id="@+id/tvInformacionCliente"
         android:layout_width="0dp"
@@ -96,7 +99,7 @@
         android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="16dp"
         android:text="Volver"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

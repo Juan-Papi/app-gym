@@ -8,6 +8,11 @@
     android:padding="16dp">
 
     <!-- Título CATEGORÍAS -->
+
+    <!-- Filtros para buscar categorías -->
+
+    <!-- Botón NUEVA CATEGORÍA -->
+
     <TextView
         android:id="@+id/tvTituloCategorias"
         android:layout_width="wrap_content"
@@ -15,20 +20,17 @@
         android:text="CATEGORÍAS"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Filtros para buscar categorías -->
-
-    <!-- Botón NUEVA CATEGORÍA -->
     <EditText
         android:id="@+id/etFiltroBuscarCategorias"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="FILTROS PARA BUSCAR CATEGORÍAS"
+        android:hint="FILTROS CATEGORIAS"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -45,18 +47,21 @@
         android:layout_marginBottom="16dp" />
 
     <!-- Título de la sección de CATEGORÍAS -->
+
+    <!-- RecyclerView para mostrar la lista de categorías -->
+
     <TextView
         android:id="@+id/tvCategorias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="CATEGORÍAS"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/btnNuevaCategoria"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnNuevaCategoria" />
 
-    <!-- RecyclerView para mostrar la lista de categorías -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCategorias"
         android:layout_width="0dp"

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@drawable/background_rounded_corners"
+    android:layout_marginBottom="16dp">
 
     <!-- Descripción del Video -->
     <TextView
@@ -11,7 +13,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Descripción del Video"
-        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,34 +29,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Botones: Ver, Editar, Eliminar -->
-    <Button
-        android:id="@+id/btnVer"
-        android:layout_width="wrap_content"
+    <!-- Contenedor para los botones -->
+    <LinearLayout
+        android:id="@+id/llBotones"
+        android:orientation="horizontal"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Ver"
         app:layout_constraintTop_toBottomOf="@id/tvUrlVideo"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp" />
+        android:gravity="center"
+        android:weightSum="3">
 
-    <Button
-        android:id="@+id/btnEditar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Editar"
-        app:layout_constraintTop_toBottomOf="@id/tvUrlVideo"
-        app:layout_constraintStart_toEndOf="@id/btnVer"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp" />
+        <!-- Botón Ver -->
+        <Button
+            android:id="@+id/btnVer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Ver"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:padding="4dp" />
 
-    <Button
-        android:id="@+id/btnEliminar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Eliminar"
-        app:layout_constraintTop_toBottomOf="@id/tvUrlVideo"
-        app:layout_constraintStart_toEndOf="@id/btnEditar"
-        android:layout_marginTop="8dp" />
+        <!-- Botón Editar -->
+        <Button
+            android:id="@+id/btnEditar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Editar"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:padding="4dp" />
+
+        <!-- Botón Eliminar -->
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Eliminar"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:padding="4dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

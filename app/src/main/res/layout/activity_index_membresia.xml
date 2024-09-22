@@ -11,20 +11,21 @@
 
     <!-- Información del Cliente -->
 
+    <!-- Botón Nueva Membresía -->
+
     <TextView
         android:id="@+id/tvTituloMembresias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="MEMBRESÍAS"
+        android:layout_marginTop="16dp"
+        android:text="MEMBRESIAS"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.722"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Botón Nueva Membresía -->
     <TextView
         android:id="@+id/tvInformacionCliente"
         android:layout_width="0dp"
@@ -74,7 +75,8 @@
         android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
         android:text="Volver"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
