@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Botón Volver -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VOLVER"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="8dp" />
+
+    <!-- Título Nueva Semana -->
+    <TextView
+        android:id="@+id/tvTituloNuevaSemana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NUEVA SEMANA"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnVolver"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <!-- Label Nombre -->
+
+    <!-- Campo de texto para ingresar el nombre de la semana -->
+
+    <TextView
+        android:id="@+id/tvNombreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="NOMBRE:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloNuevaSemana" />
+
+    <EditText
+        android:id="@+id/etNombreSemana"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de la semana"
+        app:layout_constraintTop_toBottomOf="@id/tvNombreLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:padding="8dp" />
+
+    <!-- Label Fecha -->
+    <TextView
+        android:id="@+id/tvFechaLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FECHA:"
+        app:layout_constraintTop_toBottomOf="@id/etNombreSemana"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Campo de texto para ingresar la fecha de la semana -->
+    <EditText
+        android:id="@+id/etFechaSemana"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="AAAA-MM-DD"
+        app:layout_constraintTop_toBottomOf="@id/tvFechaLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        android:inputType="date" />
+
+    <!-- Botón Guardar Semana -->
+    <Button
+        android:id="@+id/btnGuardarSemana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GUARDAR"
+        app:layout_constraintTop_toBottomOf="@id/etFechaSemana"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

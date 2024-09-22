@@ -2,6 +2,7 @@ package com.example.app_gym.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,15 @@ public class IndexSemanaActivity extends AppCompatActivity {
         listaRutinasSemanales = rutinaSemanalController.obtenerRutinasSemanalesDeCliente(clienteId);
         rutinaSemanalAdapter = new RutinaSemanalAdapter(listaRutinasSemanales, rutinaSemanalController);
         recyclerSemanas.setAdapter(rutinaSemanalAdapter);
+
+        // Configurar el botón "Nueva Semana" para navegar a SemanaActivity
+        Button btnNuevaSemana = findViewById(R.id.btnNuevaSemana);
+        btnNuevaSemana.setOnClickListener(v -> {
+            Intent intent = new Intent(IndexSemanaActivity.this, SemanaActivity.class);
+            intent.putExtra("cliente_id", clienteId); // Pasa el clienteId a la nueva actividad
+            startActivity(intent);
+        });
+
     }
 
     // Método para mostrar la información del cliente
