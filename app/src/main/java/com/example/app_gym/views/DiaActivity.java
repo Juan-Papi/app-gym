@@ -13,6 +13,9 @@ import com.example.app_gym.R;
 import com.example.app_gym.controllers.RutinaDiariaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.RutinaDiaria;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 import java.util.List;
 
@@ -67,6 +70,12 @@ public class DiaActivity extends AppCompatActivity {
             return;
         }
 
+        // Validar el formato de la fecha
+        if (!esFechaValida(fecha)) {
+            Toast.makeText(this, "Formato de fecha incorrecto. Use AAAA-MM-DD.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Verificar si el día ya existe
         for (RutinaDiaria rutinaDiaria : listaRutinasDiarias) {
             if (rutinaDiaria.getNombre().equalsIgnoreCase(diaSeleccionado)) {
@@ -91,5 +100,24 @@ public class DiaActivity extends AppCompatActivity {
         }
     }
 
+    // Método para validar la fecha en formato "AAAA-MM-DD"
+    private boolean esFechaValida(String fecha) {
+        // Expresión regular para validar el formato
+        String regex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
+        if (!Pattern.matches(regex, fecha)) {
+            return false;
+        }
+
+        // Verificar que la fecha sea válida
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false); // Para que no acepte fechas no válidas como "2024-02-30"
+
+        try {
+            sdf.parse(fecha);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
 
 }

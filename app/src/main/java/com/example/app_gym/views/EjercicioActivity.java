@@ -69,29 +69,58 @@ public class EjercicioActivity extends AppCompatActivity {
         });
 
         btnGuardarEjercicio.setOnClickListener(v -> {
-            String nombre = etNombreEjercicio.getText().toString();
-            String descripcion = etDescripcionEjercicio.getText().toString();
+            // Capturar los valores del formulario
+            String nombre = etNombreEjercicio.getText().toString().trim();
+            String descripcion = etDescripcionEjercicio.getText().toString().trim();
             Categoria categoriaSeleccionada = (Categoria) spinnerCategoria.getSelectedItem();
             Video videoSeleccionado = (Video) spinnerVideo.getSelectedItem();
-            int categoriaId = categoriaSeleccionada != null ? categoriaSeleccionada.getId() : -1;
-            int videoId = videoSeleccionado != null ? videoSeleccionado.getId() : -1;
 
+            // Validar que el nombre no esté vacío
+            if (nombre.isEmpty()) {
+                Toast.makeText(this, "Por favor, ingrese el nombre del ejercicio.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Validar que la descripción no esté vacía
+            if (descripcion.isEmpty()) {
+                Toast.makeText(this, "Por favor, ingrese la descripción del ejercicio.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Validar que se haya seleccionado una categoría
+            if (categoriaSeleccionada == null) {
+                Toast.makeText(this, "Por favor, seleccione una categoría.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Validar que se haya seleccionado un video
+            if (videoSeleccionado == null) {
+                Toast.makeText(this, "Por favor, seleccione un video.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Obtener los IDs de la categoría y el video seleccionados
+            int categoriaId = categoriaSeleccionada.getId();
+            int videoId = videoSeleccionado.getId();
+
+            // Crear un nuevo ejercicio
             Ejercicio nuevoEjercicio = new Ejercicio();
             nuevoEjercicio.setNombre(nombre);
             nuevoEjercicio.setDescripcion(descripcion);
             nuevoEjercicio.setCategoriaId(categoriaId);
             nuevoEjercicio.setVideoId(videoId);
 
+            // Guardar el ejercicio en la base de datos
             long result = ejercicioController.crearNuevoEjercicio(nuevoEjercicio);
             if (result != -1) {
                 Toast.makeText(this, "Ejercicio guardado", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);  // Indica que se guardó correctamente
+                finish();  // Finaliza la actividad y vuelve a la anterior
             } else {
                 Toast.makeText(this, "Error al guardar el ejercicio", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_CANCELED);
             }
-            finish();  // Finaliza la actividad y vuelve a la anterior
         });
+
 
     }
 }
