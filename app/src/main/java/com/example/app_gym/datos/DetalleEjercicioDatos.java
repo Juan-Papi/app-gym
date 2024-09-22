@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.DetalleEjercicio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetalleEjercicioDatos {
     private SQLiteDatabase db;
 
@@ -69,5 +72,29 @@ public class DetalleEjercicioDatos {
             return detalleEjercicio;
         }
         return null;
+    }
+
+    // Método para obtener la lista de DetalleEjercicio según el rutinaDiariaId
+    public List<DetalleEjercicio> obtenerDetallesDeEjercicio(int rutinaDiariaId) {
+        List<DetalleEjercicio> detallesEjercicio = new ArrayList<>();
+
+        String query = "SELECT id, repeticiones, series, ejercicioId, rutinaDiariaId FROM DetalleEjercicio WHERE rutinaDiariaId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(rutinaDiariaId)});
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                DetalleEjercicio detalle = new DetalleEjercicio();
+                detalle.setId(cursor.getInt(0));
+                detalle.setRepeticiones(cursor.getInt(1));
+                detalle.setSeries(cursor.getInt(2));
+                detalle.setEjercicioId(cursor.getInt(3));
+                detalle.setRutinaDiariaId(cursor.getInt(4));
+
+                detallesEjercicio.add(detalle);
+            }
+            cursor.close();
+        }
+
+        return detallesEjercicio;
     }
 }

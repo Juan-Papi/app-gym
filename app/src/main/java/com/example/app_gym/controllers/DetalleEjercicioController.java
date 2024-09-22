@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.models.DetalleEjercicio;
 import com.example.app_gym.negocio.DetalleEjercicioNegocio;
 
+import java.util.List;
+
 public class DetalleEjercicioController {
     private DetalleEjercicioNegocio detalleEjercicioNegocio;
 
@@ -30,6 +32,11 @@ public class DetalleEjercicioController {
     // Método para obtener un detalle de ejercicio por su ID
     public DetalleEjercicio obtenerDetalleEjercicio(int detalleEjercicioId) {
         return detalleEjercicioNegocio.obtenerDetalleEjercicio(detalleEjercicioId);
+    }
+
+    // Método para obtener los detalles de ejercicio
+    public List<DetalleEjercicio> obtenerDetallesDeEjercicio(int rutinaDiariaId) {
+        return detalleEjercicioNegocio.obtenerDetallesDeEjercicio(rutinaDiariaId);
     }
 }
 

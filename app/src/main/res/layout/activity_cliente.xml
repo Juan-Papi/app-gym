@@ -93,7 +93,7 @@
     <!-- Campo Fecha Entrada -->
     <EditText
         android:id="@+id/etFechaEntrada"
-        android:hint="Fecha de Entrada (YYYY-MM-DD)"
+        android:hint="Fecha de Entrada (AAAA-MM-DD)"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"

@@ -54,12 +54,16 @@ public class IndexDiaActivity extends AppCompatActivity {
 
         // Obtener la lista de rutinas diarias de la semana y configurar el adaptador
         listaRutinasDiarias = rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId);
-        Log.d("IndexDiaActivity", "Rutinas diarias obtenidas: " + listaRutinasDiarias.size());
 
         rutinaDiariaAdapter = new RutinaDiariaAdapter(listaRutinasDiarias, new RutinaDiariaAdapter.OnRutinaDiariaClickListener() {
             @Override
             public void onVerClick(int position) {
                 // Acción al hacer clic en "Ver"
+                RutinaDiaria rutinaDiaria = listaRutinasDiarias.get(position);
+                Intent intent = new Intent(IndexDiaActivity.this, IndexDetalleEjercicioActivity.class);
+                intent.putExtra("cliente_id", clienteId); // Pasar el clienteId a la nueva actividad
+                intent.putExtra("rutina_diaria_id", rutinaDiaria.getId()); // Pasar el rutinaDiariaId a la nueva actividad
+                startActivity(intent);
             }
 
             @Override
@@ -96,23 +100,4 @@ public class IndexDiaActivity extends AppCompatActivity {
                 "Se unió: " + cliente.getFechaEntrada();
         tvInformacionCliente.setText(informacion);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 1) {
-            Log.d("IndexDiaActivity", "onActivityResult called - Updating list");
-            // Actualizar la lista de rutinas diarias
-            actualizarListaRutinasDiarias();
-        }
-    }
-
-
-    // Método para actualizar la lista de rutinas diarias
-    private void actualizarListaRutinasDiarias() {
-        listaRutinasDiarias.clear();
-        listaRutinasDiarias.addAll(rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId));
-        rutinaDiariaAdapter.notifyDataSetChanged();
-    }
-
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/background_rounded_corners"
+    android:layout_marginBottom="16dp">
+
+    <!-- Información del Detalle del Ejercicio -->
+    <TextView
+        android:id="@+id/tvDetalleId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="ID: 1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvRepeticiones" />
+
+    <TextView
+        android:id="@+id/tvRepeticiones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Repeticiones: 5"
+        app:layout_constraintStart_toEndOf="@id/tvDetalleId"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvSeries"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/tvSeries"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Series: 10"
+        app:layout_constraintStart_toEndOf="@id/tvRepeticiones"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <!-- Botones de acción -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvSeries"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/btnVer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ver" />
+
+        <Button
+            android:id="@+id/btnEditar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Editar"
+            android:layout_marginStart="4dp" />
+
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Eliminar"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
