@@ -70,6 +70,13 @@ public class IndexSemanaActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button btnEstadoCliente = findViewById(R.id.btnEstadoCliente);
+        btnEstadoCliente.setOnClickListener(v -> {
+            Intent intent = new Intent(IndexSemanaActivity.this, IndexMembresiaActivity.class);
+            intent.putExtra("cliente_id", clienteId); // Pasa el clienteId a la nueva actividad
+            startActivity(intent);
+        });
+
     }
 
     // Método para mostrar la información del cliente

@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.models.Membresia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MembresiaDatos {
     private SQLiteDatabase db;
 
@@ -62,6 +65,29 @@ public class MembresiaDatos {
             return membresia;
         }
         return null;
+    }
+
+    // Método para obtener todas las membresías de un cliente
+    public List<Membresia> obtenerMembresiasPorCliente(int clienteId) {
+        List<Membresia> membresias = new ArrayList<>();
+
+        String query = "SELECT * FROM Membresia WHERE clienteId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(clienteId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Membresia membresia = new Membresia();
+                membresia.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                membresia.setFechaInicio(cursor.getString(cursor.getColumnIndexOrThrow("fechaInicio")));
+                membresia.setFechaVencimiento(cursor.getString(cursor.getColumnIndexOrThrow("fechaVencimiento")));
+                membresia.setClienteId(cursor.getInt(cursor.getColumnIndexOrThrow("clienteId")));
+
+                membresias.add(membresia);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return membresias;
     }
 
 }

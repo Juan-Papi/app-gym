@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.datos.MembresiaDatos;
 import com.example.app_gym.models.Membresia;
 
+import java.util.List;
+
 public class MembresiaNegocio {
     private MembresiaDatos membresiaDatos;
 
@@ -30,5 +32,10 @@ public class MembresiaNegocio {
     // Método para obtener una membresía por su ID
     public Membresia obtenerMembresia(int membresiaId) {
         return membresiaDatos.obtenerMembresia(membresiaId);
+    }
+
+    // Método para obtener todas las membresías de un cliente
+    public List<Membresia> obtenerMembresiasPorCliente(int clienteId) {
+        return membresiaDatos.obtenerMembresiasPorCliente(clienteId);
     }
 }
