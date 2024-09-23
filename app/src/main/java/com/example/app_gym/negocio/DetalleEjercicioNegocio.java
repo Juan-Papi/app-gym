@@ -6,6 +6,7 @@ import com.example.app_gym.datos.DetalleEjercicioDatos;
 import com.example.app_gym.models.DetalleEjercicio;
 
 import java.util.List;
+import java.util.Map;
 
 public class DetalleEjercicioNegocio {
     private DetalleEjercicioDatos detalleEjercicioDatos;
@@ -38,4 +39,9 @@ public class DetalleEjercicioNegocio {
     public List<DetalleEjercicio> obtenerDetallesDeEjercicio(int rutinaDiariaId) {
         return detalleEjercicioDatos.obtenerDetallesDeEjercicio(rutinaDiariaId);
     }
+
+    public List<Map<String, Object>> obtenerDetallesConRelaciones(int rutinaDiariaId) {
+        return detalleEjercicioDatos.obtenerDetallesConRelaciones(rutinaDiariaId);
+    }
+
 }

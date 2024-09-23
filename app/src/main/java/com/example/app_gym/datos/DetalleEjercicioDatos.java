@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.app_gym.models.DetalleEjercicio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DetalleEjercicioDatos {
     private SQLiteDatabase db;
@@ -97,4 +99,34 @@ public class DetalleEjercicioDatos {
 
         return detallesEjercicio;
     }
+
+    public List<Map<String, Object>> obtenerDetallesConRelaciones(int rutinaDiariaId) {
+        List<Map<String, Object>> detallesConRelaciones = new ArrayList<>();
+
+        String query = "SELECT de.id, de.repeticiones, de.series, e.nombre AS nombreEjercicio, e.descripcion AS descripcionEjercicio, v.videoUrl " +
+                "FROM DetalleEjercicio de " +
+                "JOIN Ejercicio e ON de.ejercicioId = e.id " +
+                "LEFT JOIN Video v ON e.videoId = v.id " +
+                "WHERE de.rutinaDiariaId = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(rutinaDiariaId)});
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Map<String, Object> detalleMap = new HashMap<>();
+                detalleMap.put("id", cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                detalleMap.put("repeticiones", cursor.getInt(cursor.getColumnIndexOrThrow("repeticiones")));
+                detalleMap.put("series", cursor.getInt(cursor.getColumnIndexOrThrow("series")));
+                detalleMap.put("nombreEjercicio", cursor.getString(cursor.getColumnIndexOrThrow("nombreEjercicio")));
+                detalleMap.put("descripcionEjercicio", cursor.getString(cursor.getColumnIndexOrThrow("descripcionEjercicio")));
+                detalleMap.put("videoUrl", cursor.getString(cursor.getColumnIndexOrThrow("videoUrl")));
+
+                detallesConRelaciones.add(detalleMap);
+            }
+            cursor.close();
+        }
+
+        return detallesConRelaciones;
+    }
+
 }
