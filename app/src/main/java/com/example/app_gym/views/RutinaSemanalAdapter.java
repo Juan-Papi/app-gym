@@ -31,6 +31,8 @@ import com.itextpdf.layout.element.Table;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,14 +148,30 @@ public class RutinaSemanalAdapter extends RecyclerView.Adapter<RutinaSemanalAdap
             RutinaDiariaController rutinaDiariaController = new RutinaDiariaController(db);
             List<Map<String, Object>> rutinasDiariasConDetalles = rutinaDiariaController.obtenerRutinasDiariasConRelaciones(rutinaSemanal.getId());
 
-            // Recorre cada rutina diaria y genera la tabla para sus detalles
+            // Agrupar los detalles de ejercicios por rutinaDiariaId
+            Map<Integer, List<Map<String, Object>>> ejerciciosPorRutina = new HashMap<>();
             for (Map<String, Object> rutinaDiaria : rutinasDiariasConDetalles) {
-                Paragraph subTitulo = new Paragraph("Rutina Diaria: " + rutinaDiaria.get("rutinaNombre"))
+                int rutinaDiariaId = (int) rutinaDiaria.get("rutinaDiariaId");
+                if (!ejerciciosPorRutina.containsKey(rutinaDiariaId)) {
+                    ejerciciosPorRutina.put(rutinaDiariaId, new ArrayList<>());
+                }
+                ejerciciosPorRutina.get(rutinaDiariaId).add(rutinaDiaria);
+            }
+
+            // Recorre cada RutinaDiaria agrupada y agrega la información al PDF
+            for (Map.Entry<Integer, List<Map<String, Object>>> entry : ejerciciosPorRutina.entrySet()) {
+                List<Map<String, Object>> ejercicios = entry.getValue();
+
+                // Usar el primer elemento para extraer información de la RutinaDiaria
+                Map<String, Object> primeraRutinaDiaria = ejercicios.get(0);
+
+                // Agregar título de la Rutina Diaria
+                Paragraph subTitulo = new Paragraph("Rutina Diaria: " + primeraRutinaDiaria.get("rutinaNombre"))
                         .setBold()
                         .setFontSize(14);
                 document.add(subTitulo);
 
-                Paragraph fechaDiaria = new Paragraph("Fecha: " + rutinaDiaria.get("rutinaFecha"))
+                Paragraph fechaDiaria = new Paragraph("Fecha: " + primeraRutinaDiaria.get("rutinaFecha"))
                         .setFontSize(12);
                 document.add(fechaDiaria);
 
@@ -168,23 +186,27 @@ public class RutinaSemanalAdapter extends RecyclerView.Adapter<RutinaSemanalAdap
                 table.addCell(new Paragraph("Series").setBold());
                 table.addCell(new Paragraph("Repeticiones").setBold());
 
-                table.addCell((String) rutinaDiaria.get("nombreEjercicio"));
-                table.addCell((String) rutinaDiaria.get("descripcionEjercicio"));
+                // Añadir los detalles de ejercicios a la tabla
+                for (Map<String, Object> detalle : ejercicios) {
+                    table.addCell((String) detalle.get("nombreEjercicio"));
+                    table.addCell((String) detalle.get("descripcionEjercicio"));
 
-                // Crea un hipervínculo para la URL del video
-                String videoUrl = (String) rutinaDiaria.get("videoUrl");
-                if (videoUrl != null && !videoUrl.isEmpty()) {
-                    Link link = new Link("Ver Video", PdfAction.createURI(videoUrl));
-                    Paragraph urlParagraph = new Paragraph(link)
-                            .setFontColor(com.itextpdf.kernel.colors.ColorConstants.BLUE)
-                            .setUnderline();
-                    table.addCell(urlParagraph);
-                } else {
-                    table.addCell("N/A");
+                    // Crea un hipervínculo para la URL del video
+                    String videoUrl = (String) detalle.get("videoUrl");
+                    if (videoUrl != null && !videoUrl.isEmpty()) {
+                        Link link = new Link("Ver Video", PdfAction.createURI(videoUrl));
+                        Paragraph urlParagraph = new Paragraph(link)
+                                .setFontColor(com.itextpdf.kernel.colors.ColorConstants.BLUE)
+                                .setUnderline();
+                        table.addCell(urlParagraph);
+                    } else {
+                        table.addCell("N/A");
+                    }
+
+                    table.addCell(String.valueOf(detalle.get("series")));
+                    table.addCell(String.valueOf(detalle.get("repeticiones")));
                 }
 
-                table.addCell(String.valueOf(rutinaDiaria.get("series")));
-                table.addCell(String.valueOf(rutinaDiaria.get("repeticiones")));
                 document.add(table);
             }
 
