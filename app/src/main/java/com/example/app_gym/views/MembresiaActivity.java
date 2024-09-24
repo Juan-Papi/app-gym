@@ -1,7 +1,7 @@
 package com.example.app_gym.views;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +14,8 @@ import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.Membresia;
+
+import java.util.Calendar;
 
 public class MembresiaActivity extends AppCompatActivity {
 
@@ -46,18 +48,17 @@ public class MembresiaActivity extends AppCompatActivity {
 
         // Configuración del botón Volver
         Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v -> {
-            finish();  // Cierra la actividad actual y vuelve a la actividad anterior
-        });
+        btnVolver.setOnClickListener(v -> finish());  // Cierra la actividad actual y vuelve a la actividad anterior
 
         // Configura el botón Guardar
         Button btnGuardar = findViewById(R.id.btnGuardar);
-        btnGuardar.setOnClickListener(v -> {
-            guardarMembresia();
-        });
+        btnGuardar.setOnClickListener(v -> guardarMembresia());
+
+        // Configuración del DatePickerDialog para que se abra al hacer clic
+        abrirDatePickerDirectamente(etFechaInicio);
+        abrirDatePickerDirectamente(etFechaVence);
     }
 
-    // Método para mostrar la información del cliente
     private void mostrarInformacionCliente() {
         Cliente cliente = clienteController.obtenerCliente(clienteId);
 
@@ -68,6 +69,24 @@ public class MembresiaActivity extends AppCompatActivity {
             tvInformacionCliente.setText(informacion);
         }
     }
+
+    private void abrirDatePickerDirectamente(EditText editText) {
+        editText.setFocusable(false);
+        editText.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
+                String selectedDate = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                editText.setText(selectedDate);
+            }, year, month, day);
+
+            datePickerDialog.show();
+        });
+    }
+
     private void guardarMembresia() {
         String fechaInicio = etFechaInicio.getText().toString();
         String fechaVence = etFechaVence.getText().toString();
