@@ -9,6 +9,9 @@ import com.example.app_gym.models.RutinaDiaria;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RutinaDiariaDatos {
     private SQLiteDatabase db;
 
@@ -87,4 +90,39 @@ public class RutinaDiariaDatos {
 
         return listaRutinasDiarias;
     }
+
+    // Método para obtener rutinas diarias con sus detalles
+    public List<Map<String, Object>> obtenerRutinasDiariasConRelaciones(int semanaId) {
+        List<Map<String, Object>> rutinasConDetalles = new ArrayList<>();
+
+        // Cambia "rd.semanaId" por "rd.rutinaSemanalId"
+        String query = "SELECT rd.id AS rutinaDiariaId, rd.nombre AS rutinaNombre, rd.fecha AS rutinaFecha, " +
+                "de.repeticiones, de.series, e.nombre AS nombreEjercicio, e.descripcion AS descripcionEjercicio, v.videoUrl " +
+                "FROM RutinaDiaria rd " +
+                "LEFT JOIN DetalleEjercicio de ON rd.id = de.rutinaDiariaId " +
+                "LEFT JOIN Ejercicio e ON de.ejercicioId = e.id " +
+                "LEFT JOIN Video v ON e.videoId = v.id " +
+                "WHERE rd.rutinaSemanalId = ?"; // Cambio realizado aquí
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(semanaId)});
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Map<String, Object> rutinaMap = new HashMap<>();
+                rutinaMap.put("rutinaDiariaId", cursor.getInt(cursor.getColumnIndexOrThrow("rutinaDiariaId")));
+                rutinaMap.put("rutinaNombre", cursor.getString(cursor.getColumnIndexOrThrow("rutinaNombre")));
+                rutinaMap.put("rutinaFecha", cursor.getString(cursor.getColumnIndexOrThrow("rutinaFecha")));
+                rutinaMap.put("repeticiones", cursor.getInt(cursor.getColumnIndexOrThrow("repeticiones")));
+                rutinaMap.put("series", cursor.getInt(cursor.getColumnIndexOrThrow("series")));
+                rutinaMap.put("nombreEjercicio", cursor.getString(cursor.getColumnIndexOrThrow("nombreEjercicio")));
+                rutinaMap.put("descripcionEjercicio", cursor.getString(cursor.getColumnIndexOrThrow("descripcionEjercicio")));
+                rutinaMap.put("videoUrl", cursor.getString(cursor.getColumnIndexOrThrow("videoUrl")));
+                rutinasConDetalles.add(rutinaMap);
+            }
+            cursor.close();
+        }
+
+        return rutinasConDetalles;
+    }
+
 }

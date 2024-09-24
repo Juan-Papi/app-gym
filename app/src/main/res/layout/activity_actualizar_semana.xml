@@ -11,19 +11,19 @@
         android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VOLVER"
+        android:text="Volver"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginEnd="8dp" />
 
-    <!-- Título Nueva Semana -->
+    <!-- Título Actualizar Semana -->
     <TextView
-        android:id="@+id/tvTituloNuevaSemana"
+        android:id="@+id/tvTituloActualizarSemana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:text="NUEVA SEMANA"
+        android:text="Actualizar Semana"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,40 +31,42 @@
         app:layout_constraintStart_toEndOf="@id/btnVolver"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Campo de texto para ingresar el nombre de la semana -->
+    <!-- Campo Nombre Semana -->
+
+    <!-- Campo Fecha con DatePicker -->
     <EditText
         android:id="@+id/etNombreSemana"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:hint="Nombre de la semana"
-        app:layout_constraintTop_toBottomOf="@id/tvTituloNuevaSemana"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
         android:minHeight="48dp"
-        android:padding="8dp" />
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloActualizarSemana" />
 
-    <!-- Campo Fecha de la Semana con DatePicker -->
     <EditText
         android:id="@+id/etFechaSemana"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Seleccionar Fecha"
+        android:hint="Fecha de la semana"
         android:focusable="false"
         android:clickable="true"
-        android:minHeight="48dp"
-        android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/etNombreSemana"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        android:padding="8dp" />
 
-    <!-- Botón Guardar Semana -->
+    <!-- Botón Guardar Semana Actualizada -->
     <Button
         android:id="@+id/btnGuardarSemana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GUARDAR"
+        android:text="Guardar"
         app:layout_constraintTop_toBottomOf="@id/etFechaSemana"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

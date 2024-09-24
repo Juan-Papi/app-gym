@@ -86,6 +86,10 @@
             android:name=".views.ActualizarClienteActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.ActualizarSemanaActivity"
+            android:exported="true">
+        </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

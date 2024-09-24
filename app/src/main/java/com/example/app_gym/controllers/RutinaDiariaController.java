@@ -6,6 +6,7 @@ import com.example.app_gym.models.RutinaDiaria;
 import com.example.app_gym.negocio.RutinaDiariaNegocio;
 
 import java.util.List;
+import java.util.Map;
 
 public class RutinaDiariaController {
     private RutinaDiariaNegocio rutinaDiariaNegocio;
@@ -36,5 +37,10 @@ public class RutinaDiariaController {
 
     public List<RutinaDiaria> obtenerRutinasDiariasDeSemana(int semanaId) {
         return rutinaDiariaNegocio.obtenerRutinasDiariasDeSemana(semanaId);
+    }
+
+    // Nuevo método para obtener rutinas diarias con sus detalles
+    public List<Map<String, Object>> obtenerRutinasDiariasConRelaciones(int semanaId) {
+        return rutinaDiariaNegocio.obtenerRutinasDiariasConRelaciones(semanaId);
     }
 }

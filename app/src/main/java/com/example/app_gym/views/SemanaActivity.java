@@ -1,6 +1,6 @@
 package com.example.app_gym.views;
 
-import android.content.Intent;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +10,7 @@ import com.example.app_gym.R;
 import com.example.app_gym.controllers.RutinaSemanalController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.RutinaSemanal;
+import java.util.Calendar;
 
 public class SemanaActivity extends AppCompatActivity {
 
@@ -36,6 +37,26 @@ public class SemanaActivity extends AppCompatActivity {
         btnGuardarSemana = findViewById(R.id.btnGuardarSemana);
         btnVolver = findViewById(R.id.btnVolver);
 
+        // Configuración del DatePickerDialog para abrirse al hacer clic en el EditText
+        etFechaSemana.setOnClickListener(v -> {
+            // Obtener la fecha actual
+            final Calendar calendario = Calendar.getInstance();
+            int anio = calendario.get(Calendar.YEAR);
+            int mes = calendario.get(Calendar.MONTH);
+            int dia = calendario.get(Calendar.DAY_OF_MONTH);
+
+            // Mostrar el DatePickerDialog
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    SemanaActivity.this,
+                    (view, year, monthOfYear, dayOfMonth) -> {
+                        // Ajustar el mes (+1 porque enero es 0)
+                        String fechaSeleccionada = year + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", dayOfMonth);
+                        etFechaSemana.setText(fechaSeleccionada); // Mostrar la fecha seleccionada en el EditText
+                    },
+                    anio, mes, dia);
+            datePickerDialog.show();
+        });
+
         // Configurar el botón Guardar
         btnGuardarSemana.setOnClickListener(v -> guardarRutinaSemanal());
 
@@ -45,8 +66,8 @@ public class SemanaActivity extends AppCompatActivity {
 
     private void guardarRutinaSemanal() {
         // Obtener los valores ingresados por el usuario
-        String nombre = etNombreSemana.getText().toString();
-        String fecha = etFechaSemana.getText().toString();
+        String nombre = etNombreSemana.getText().toString().trim();
+        String fecha = etFechaSemana.getText().toString().trim();
 
         if (nombre.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(this, "Por favor, ingresa todos los campos", Toast.LENGTH_SHORT).show();
