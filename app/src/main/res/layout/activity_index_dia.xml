@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -33,31 +34,33 @@
         android:layout_marginTop="8dp" />
 
     <!-- Botón Nuevo Día -->
-    <Button
-        android:id="@+id/btnNuevoDia"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Nuevo Día"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarDias"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvDiasLabel"
-        android:layout_marginTop="8dp" />
 
     <!-- Label de Días (1 a 7) -->
 
     <!-- RecyclerView para mostrar la lista de días -->
 
+    <Button
+        android:id="@+id/btnNuevoDia"
+        android:layout_width="134dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:text="Nuevo Día"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarDias" />
+
     <TextView
         android:id="@+id/tvDiasLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:text="DÍAS (1 a 7)"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnNuevoDia"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarDias" />
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNuevoDia" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDias"

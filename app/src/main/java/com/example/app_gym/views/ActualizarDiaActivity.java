@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
@@ -14,35 +13,31 @@ import com.example.app_gym.controllers.RutinaDiariaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.RutinaDiaria;
 import java.util.Calendar;
-import java.util.List;
 
-public class DiaActivity extends AppCompatActivity {
+public class ActualizarDiaActivity extends AppCompatActivity {
 
     private RutinaDiariaController rutinaDiariaController;
     private Spinner spinnerDias;
     private EditText etFecha;
-    private int semanaId;
-    private List<RutinaDiaria> listaRutinasDiarias;
+    private int rutinaDiariaId;
+    private RutinaDiaria rutinaDiariaActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dia);
+        setContentView(R.layout.activity_actualizar_dia);
 
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         rutinaDiariaController = new RutinaDiariaController(dbHelper.getWritableDatabase());
 
-        // Obtener el semanaId desde el Intent
-        semanaId = getIntent().getIntExtra("semana_id", -1);
-
-        // Cargar las rutinas diarias existentes para validar los días
-        listaRutinasDiarias = rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId);
+        // Obtener el rutinaDiariaId desde el Intent
+        rutinaDiariaId = getIntent().getIntExtra("rutina_diaria_id", -1);
 
         // Referenciar los elementos de la vista
         spinnerDias = findViewById(R.id.spinnerDias);
         etFecha = findViewById(R.id.etFecha);
-        Button btnGuardar = findViewById(R.id.btnGuardar);
+        Button btnActualizar = findViewById(R.id.btnActualizar);
         Button btnVolver = findViewById(R.id.btnVolver);
 
         // Configurar el Spinner con los días de la semana
@@ -50,14 +45,38 @@ public class DiaActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDias.setAdapter(adapter);
 
+        // Cargar la información del día que se va a actualizar
+        cargarRutinaDiaria();
+
         // Configurar el DatePickerDialog para seleccionar la fecha
         etFecha.setOnClickListener(v -> mostrarDatePicker());
 
-        // Configurar el botón "Guardar"
-        btnGuardar.setOnClickListener(v -> guardarDia());
+        // Configurar el botón "Actualizar"
+        btnActualizar.setOnClickListener(v -> actualizarDia());
 
         // Configurar el botón "Volver"
         btnVolver.setOnClickListener(v -> finish());
+    }
+
+    // Método para cargar los datos de la rutina diaria
+    private void cargarRutinaDiaria() {
+        rutinaDiariaActual = rutinaDiariaController.obtenerRutinaDiaria(rutinaDiariaId);
+
+        if (rutinaDiariaActual != null) {
+            // Seleccionar el día correspondiente en el spinner
+            String[] diasArray = getResources().getStringArray(R.array.dias_semana);
+            for (int i = 0; i < diasArray.length; i++) {
+                if (diasArray[i].equalsIgnoreCase(rutinaDiariaActual.getNombre())) {
+                    spinnerDias.setSelection(i);
+                    break;
+                }
+            }
+            // Establecer la fecha actual
+            etFecha.setText(rutinaDiariaActual.getFecha());
+        } else {
+            Toast.makeText(this, "No se pudo cargar la información del día.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     // Método para mostrar el DatePickerDialog
@@ -75,8 +94,8 @@ public class DiaActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Método para guardar el día
-    private void guardarDia() {
+    // Método para actualizar el día
+    private void actualizarDia() {
         String diaSeleccionado = spinnerDias.getSelectedItem().toString();
         String fecha = etFecha.getText().toString();
 
@@ -85,27 +104,17 @@ public class DiaActivity extends AppCompatActivity {
             return;
         }
 
-        // Verificar si el día ya existe
-        for (RutinaDiaria rutinaDiaria : listaRutinasDiarias) {
-            if (rutinaDiaria.getNombre().equalsIgnoreCase(diaSeleccionado)) {
-                Toast.makeText(this, "El día seleccionado ya existe en la semana.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
+        // Actualizar los datos de la rutina diaria
+        rutinaDiariaActual.setNombre(diaSeleccionado);
+        rutinaDiariaActual.setFecha(fecha);
 
-        // Si no está duplicado, creamos la nueva rutina diaria
-        RutinaDiaria nuevaRutinaDiaria = new RutinaDiaria();
-        nuevaRutinaDiaria.setNombre(diaSeleccionado);
-        nuevaRutinaDiaria.setFecha(fecha);
-        nuevaRutinaDiaria.setRutinaSemanalId(semanaId);
-
-        long result = rutinaDiariaController.crearNuevaRutinaDiaria(nuevaRutinaDiaria);
-        if (result != -1) {
-            Toast.makeText(this, "Día guardado correctamente.", Toast.LENGTH_SHORT).show();
+        int result = rutinaDiariaController.actualizarRutinaDiaria(rutinaDiariaActual);
+        if (result > 0) {
+            Toast.makeText(this, "Día actualizado correctamente.", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Establecer el resultado como RESULT_OK
             finish(); // Cierra la actividad y regresa al index
         } else {
-            Toast.makeText(this, "Error al guardar el día.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al actualizar el día.", Toast.LENGTH_SHORT).show();
         }
     }
 }

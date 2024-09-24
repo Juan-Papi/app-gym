@@ -1,5 +1,6 @@
 package com.example.app_gym.views;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -99,11 +100,38 @@ public class IndexDiaActivity extends AppCompatActivity {
             @Override
             public void onEditarClick(int position) {
                 // Acción al hacer clic en "Editar"
+                RutinaDiaria rutinaDiaria = listaRutinasDiarias.get(position);
+                Intent intent = new Intent(IndexDiaActivity.this, ActualizarDiaActivity.class);
+                intent.putExtra("cliente_id", clienteId); // Pasar el clienteId a la nueva actividad
+                intent.putExtra("rutina_diaria_id", rutinaDiaria.getId()); // Pasar el rutinaDiariaId a la nueva actividad
+                intent.putExtra("semana_id", semanaId); // Pasar el semanaId
+                startActivityForResult(intent, 2); // Usar startActivityForResult para obtener el resultado al editar
             }
+
 
             @Override
             public void onEliminarClick(int position) {
-                // Acción al hacer clic en "Eliminar"
+                // Mostrar un AlertDialog para confirmar la eliminación
+                new AlertDialog.Builder(IndexDiaActivity.this)
+                        .setTitle("Eliminar Rutina Diaria")
+                        .setMessage("¿Estás seguro de que deseas eliminar esta rutina diaria?")
+                        .setPositiveButton("Sí", (dialog, which) -> {
+                            RutinaDiaria rutinaDiaria = listaRutinasDiarias.get(position);
+
+                            // Eliminar la rutina diaria a través del controlador
+                            int resultado = rutinaDiariaController.eliminarRutinaDiaria(rutinaDiaria.getId());
+
+                            if (resultado > 0) {
+                                listaRutinasDiarias.remove(position);
+                                rutinaDiariaAdapter.notifyItemRemoved(position);
+                                rutinaDiariaAdapter.notifyItemRangeChanged(position, listaRutinasDiarias.size());
+                                Toast.makeText(IndexDiaActivity.this, "Rutina diaria eliminada", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(IndexDiaActivity.this, "Error al eliminar la rutina diaria", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", null) // No hace nada si se elige "No"
+                        .show();
             }
 
             @Override
@@ -130,7 +158,7 @@ public class IndexDiaActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Los permisos son necesarios para guardar el PDF", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, "Los permisos son necesarios para guardar el PDF", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -147,7 +175,7 @@ public class IndexDiaActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if ((requestCode == 1 || requestCode == 2) && resultCode == RESULT_OK) {
             // Volver a cargar la lista de rutinas diarias
             actualizarListaRutinasDiarias();
         }

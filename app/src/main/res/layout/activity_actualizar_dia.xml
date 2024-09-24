@@ -8,19 +8,22 @@
     android:padding="16dp">
 
     <!-- Título de la pantalla -->
+
+    <!-- Botón Volver -->
+
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NUEVO DÍA"
+        android:layout_marginTop="16dp"
+        android:text="ACTUALIZAR DÍA"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintHorizontal_bias="0.821"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Botón Volver -->
     <Button
         android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
@@ -42,8 +45,8 @@
 
     <Spinner
         android:id="@+id/spinnerDias"
-        android:layout_width="328dp"
-        android:layout_height="72dp"
+        android:layout_width="340dp"
+        android:layout_height="65dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +64,8 @@
 
     <EditText
         android:id="@+id/etFecha"
-        android:layout_width="331dp"
-        android:layout_height="67dp"
+        android:layout_width="329dp"
+        android:layout_height="66dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="false"
@@ -72,12 +75,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvFechaLabel" />
 
-    <!-- Botón Guardar -->
+    <!-- Botón Actualizar -->
     <Button
-        android:id="@+id/btnGuardar"
+        android:id="@+id/btnActualizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GUARDAR"
+        android:text="ACTUALIZAR"
         app:layout_constraintTop_toBottomOf="@id/etFecha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
