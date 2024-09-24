@@ -1,9 +1,12 @@
 package com.example.app_gym.views;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,8 +73,8 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Actualiza la lista de membresías
+        if (resultCode == RESULT_OK) {
+            // Actualiza la lista de membresías si se agregó o editó una membresía
             listaMembresias.clear();
             listaMembresias.addAll(membresiaController.obtenerMembresiasPorCliente(clienteId));
             membresiaAdapter.notifyDataSetChanged();
@@ -93,26 +96,42 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
     }
 
     @Override
-    public void onVerClick(int position) {
-        // Acción para ver una membresía
-    }
-
-    @Override
     public void onEditarClick(int position) {
-        // Acción para editar una membresía
+        // Obtén la membresía seleccionada de la lista
+        Membresia membresiaSeleccionada = listaMembresias.get(position);
+
+        // Inicia la actividad ActualizarMembresiaActivity
+        Intent intent = new Intent(IndexMembresiaActivity.this, ActualizarMembresiaActivity.class);
+        intent.putExtra("cliente_id", clienteId); // Pasa el ID del cliente
+        intent.putExtra("membresia_id", membresiaSeleccionada.getId()); // Pasa el ID de la membresía seleccionada
+        startActivityForResult(intent, 2); // Utiliza un código de solicitud diferente para la edición
     }
 
     @Override
     public void onEliminarClick(int position) {
-        // Acción para eliminar una membresía
-        Membresia membresia = listaMembresias.get(position);
-        membresiaController.eliminarMembresia(membresia.getId());
-        listaMembresias.remove(position);
-        membresiaAdapter.notifyItemRemoved(position);
+        // Obtén la membresía seleccionada de la lista
+        Membresia membresiaSeleccionada = listaMembresias.get(position);
+
+        // Muestra el diálogo de confirmación
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar Membresía")
+                .setMessage("¿Estás seguro de que deseas eliminar esta membresía?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    // Llama al controlador para eliminar la membresía
+                    int resultado = membresiaController.eliminarMembresia(membresiaSeleccionada.getId());
+
+                    if (resultado > 0) {
+                        // Elimina la membresía de la lista y notifica al adaptador
+                        listaMembresias.remove(position);
+                        membresiaAdapter.notifyItemRemoved(position);
+                        membresiaAdapter.notifyItemRangeChanged(position, listaMembresias.size());
+                        Toast.makeText(IndexMembresiaActivity.this, "Membresía eliminada", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(IndexMembresiaActivity.this, "Error al eliminar la membresía", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
-    @Override
-    public void onPdfClick(int position) {
-        // Acción para generar PDF
-    }
 }

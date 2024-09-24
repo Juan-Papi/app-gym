@@ -17,10 +17,8 @@ public class MembresiaAdapter extends RecyclerView.Adapter<MembresiaAdapter.Memb
     private OnMembresiaClickListener listener;
 
     public interface OnMembresiaClickListener {
-        void onVerClick(int position);
         void onEditarClick(int position);
         void onEliminarClick(int position);
-        void onPdfClick(int position);
     }
 
     public MembresiaAdapter(List<Membresia> listaMembresias, OnMembresiaClickListener listener) {
@@ -41,10 +39,9 @@ public class MembresiaAdapter extends RecyclerView.Adapter<MembresiaAdapter.Memb
         holder.tvFechaInicio.setText("Fecha inicio: " + membresia.getFechaInicio());
         holder.tvFechaFin.setText("Fecha fin: " + membresia.getFechaVencimiento());
 
-        holder.btnVer.setOnClickListener(v -> listener.onVerClick(position));
         holder.btnEditar.setOnClickListener(v -> listener.onEditarClick(position));
         holder.btnEliminar.setOnClickListener(v -> listener.onEliminarClick(position));
-        holder.btnPdf.setOnClickListener(v -> listener.onPdfClick(position));
+
     }
 
     @Override
@@ -60,10 +57,8 @@ public class MembresiaAdapter extends RecyclerView.Adapter<MembresiaAdapter.Memb
             super(itemView);
             tvFechaInicio = itemView.findViewById(R.id.tvFechaInicio);
             tvFechaFin = itemView.findViewById(R.id.tvFechaFin);
-            btnVer = itemView.findViewById(R.id.btnVer);
             btnEditar = itemView.findViewById(R.id.btnEditar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
-            btnPdf = itemView.findViewById(R.id.btnPdf);
         }
     }
 }

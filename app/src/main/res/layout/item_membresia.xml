@@ -42,33 +42,12 @@
         android:gravity="center"
         android:weightSum="4">
 
-        <!-- Botón Ver -->
-        <Button
-            android:id="@+id/btnVer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Ver"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:padding="4dp" />
-
         <!-- Botón Editar -->
         <Button
             android:id="@+id/btnEditar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Editar"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:padding="4dp" />
-
-        <!-- Botón PDF -->
-        <Button
-            android:id="@+id/btnPdf"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="PDF"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
