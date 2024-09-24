@@ -3,6 +3,7 @@ package com.example.app_gym;
 import android.content.Intent; // Agregar esta importación
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.example.app_gym.R;
 import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
+import com.example.app_gym.views.ActualizarClienteActivity;
 import com.example.app_gym.views.ClienteActivity;
 import com.example.app_gym.views.ClienteAdapter;
 import com.example.app_gym.views.IndexEjercicioActivity;
@@ -74,17 +76,34 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
 
     @Override
     public void onEditarClick(int position) {
-        // Acción para editar el cliente (aún por implementar)
+        Cliente cliente = listaClientes.get(position);
+        Intent intent = new Intent(MainActivity.this, ActualizarClienteActivity.class);
+        intent.putExtra("cliente_id", cliente.getId()); // Pasar el ID del cliente
+        startActivity(intent);
     }
 
     @Override
     public void onEliminarClick(int position) {
-        // Acción para eliminar el cliente
+        // Obtener el cliente que se va a eliminar
         Cliente cliente = listaClientes.get(position);
-        clienteController.eliminarCliente(cliente.getId());
-        listaClientes.remove(position);
-        clienteAdapter.notifyItemRemoved(position);
+
+        // Eliminar el cliente de la base de datos
+        int result = clienteController.eliminarCliente(cliente.getId());
+
+        if (result > 0) {
+            // Recargar la lista de clientes desde la base de datos
+            listaClientes.clear();
+            listaClientes.addAll(clienteController.obtenerTodosLosClientes());
+
+            // Notificar al adaptador que los datos han cambiado
+            clienteAdapter.notifyDataSetChanged();
+
+            Toast.makeText(this, "Cliente eliminado correctamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error al eliminar el cliente", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     // Sobrescribir onActivityResult para recibir el resultado de ClienteActivity
     @Override

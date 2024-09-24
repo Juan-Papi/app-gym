@@ -1,9 +1,11 @@
 package com.example.app_gym.views;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,21 +15,18 @@ import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.regex.Pattern;
+import java.util.Calendar;
 
 public class ClienteActivity extends AppCompatActivity {
     private ClienteController clienteController;
-    private EditText etNombre, etApellido, etEdad, etEstado, etFechaEntrada, etObs;
+    private EditText etNombre, etApellido, etEdad, etFechaEntrada, etObs;
+    private Spinner spinnerEstado;
     private Button btnGuardar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
-
-
 
         // Inicializa la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -38,70 +37,53 @@ public class ClienteActivity extends AppCompatActivity {
         etNombre = findViewById(R.id.etNombre);
         etApellido = findViewById(R.id.etApellido);
         etEdad = findViewById(R.id.etEdad);
-        etEstado = findViewById(R.id.etEstado);
+        spinnerEstado = findViewById(R.id.spinnerEstado);
         etFechaEntrada = findViewById(R.id.etFechaEntrada);
         etObs = findViewById(R.id.etObs);
         btnGuardar = findViewById(R.id.btnGuardar);
 
+        // Configuración del Spinner para seleccionar "Activo" o "Inactivo"
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.estado_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEstado.setAdapter(adapter);
+
         // Configuración del botón Volver
         Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v -> {
-            finish();  // Cierra la actividad actual y vuelve a la actividad anterior
+        btnVolver.setOnClickListener(v -> finish());  // Cierra la actividad actual y vuelve a la actividad anterior
+
+        // Configuración del DatePickerDialog para seleccionar la fecha
+        etFechaEntrada.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
+                String selectedDate = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                etFechaEntrada.setText(selectedDate);
+            }, year, month, day);
+
+            datePickerDialog.show();
         });
 
-        // Configura el botón Guardar
         // Configura el botón Guardar
         btnGuardar.setOnClickListener(v -> {
             // Captura los valores del formulario
             String nombre = etNombre.getText().toString().trim();
             String apellido = etApellido.getText().toString().trim();
             String edadStr = etEdad.getText().toString().trim();
-            String estado = etEstado.getText().toString().trim();
+            String estado = spinnerEstado.getSelectedItem().toString();
             String fechaEntrada = etFechaEntrada.getText().toString().trim();
             String obs = etObs.getText().toString().trim();
 
             // Validar que los campos no estén vacíos
-            if (nombre.isEmpty()) {
-                Toast.makeText(this, "Por favor, ingrese el nombre.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (apellido.isEmpty()) {
-                Toast.makeText(this, "Por favor, ingrese el apellido.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (edadStr.isEmpty()) {
-                Toast.makeText(this, "Por favor, ingrese la edad.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (!esNumeroValido(edadStr)) {
-                Toast.makeText(this, "La edad debe ser un número válido.", Toast.LENGTH_SHORT).show();
+            if (nombre.isEmpty() || apellido.isEmpty() || edadStr.isEmpty() || fechaEntrada.isEmpty()) {
+                Toast.makeText(this, "Todos los campos son obligatorios.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int edad = Integer.parseInt(edadStr);
-
-            if (edad <= 0) {
-                Toast.makeText(this, "La edad debe ser mayor que 0.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (estado.isEmpty()) {
-                Toast.makeText(this, "Por favor, ingrese el estado del cliente.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (fechaEntrada.isEmpty()) {
-                Toast.makeText(this, "Por favor, ingrese la fecha de entrada.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (!esFechaValida(fechaEntrada)) {
-                Toast.makeText(this, "La fecha debe tener el formato AAAA-MM-DD.", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
             // Crea un nuevo cliente
             Cliente nuevoCliente = new Cliente();
@@ -120,7 +102,7 @@ public class ClienteActivity extends AppCompatActivity {
             etNombre.setText("");
             etApellido.setText("");
             etEdad.setText("");
-            etEstado.setText("");
+            spinnerEstado.setSelection(0); // Restablece el spinner a la primera opción
             etFechaEntrada.setText("");
             etObs.setText("");
 
@@ -128,36 +110,5 @@ public class ClienteActivity extends AppCompatActivity {
             setResult(RESULT_OK);  // Indica que la operación fue exitosa
             finish();  // Cierra la actividad y vuelve a MainActivity
         });
-    }
-
-
-    // Método para validar si es un número válido
-    private boolean esNumeroValido(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    // Método para validar la fecha en formato "AAAA-MM-DD"
-    private boolean esFechaValida(String fecha) {
-        // Expresión regular para validar el formato
-        String regex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
-        if (!Pattern.matches(regex, fecha)) {
-            return false;
-        }
-
-        // Verificar que la fecha sea válida
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(false); // Para que no acepte fechas no válidas como "2024-02-30"
-
-        try {
-            sdf.parse(fecha);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
     }
 }
