@@ -1,5 +1,7 @@
 package com.example.app_gym.models;
 
+import java.util.Objects;
+
 public class Categoria {
     private int id;
     private String nombre;
@@ -34,4 +36,5 @@ public class Categoria {
     public String toString() {
         return nombre; // Esto es lo que mostrará el Spinner
     }
+
 }

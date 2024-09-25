@@ -41,7 +41,7 @@ public class IndexEjercicioActivity extends AppCompatActivity {
         listaEjercicios = ejercicioController.obtenerTodosLosEjerciciosConRelaciones();
 
         // Configuramos el adaptador
-        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioController);
+        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioController,this);
         recyclerEjercicios.setAdapter(ejercicioAdapter);
 
         Button btnVolver = findViewById(R.id.btnVolver);
@@ -82,7 +82,7 @@ public class IndexEjercicioActivity extends AppCompatActivity {
 
     private void actualizarListaEjercicios() {
         listaEjercicios = ejercicioController.obtenerTodosLosEjerciciosConRelaciones();
-        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioController);
+        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioController,this);
         recyclerEjercicios.setAdapter(ejercicioAdapter);
         ejercicioAdapter.notifyDataSetChanged();
     }

@@ -1,10 +1,14 @@
 package com.example.app_gym.views;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,10 +25,12 @@ public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.Ejer
 
     private List<Ejercicio> listaEjercicios;
     private EjercicioController ejercicioController;
+    private Context context; // Añadir una variable de instancia para el contexto
 
-    public EjercicioAdapter(List<Ejercicio> listaEjercicios, EjercicioController ejercicioController) {
+    public EjercicioAdapter(List<Ejercicio> listaEjercicios, EjercicioController ejercicioController, Context context) {
         this.listaEjercicios = listaEjercicios;
         this.ejercicioController = ejercicioController;
+        this.context = context; // Inicializar la variable de contexto
     }
 
     @NonNull
@@ -57,7 +63,36 @@ public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.Ejer
         } else {
             holder.tvVideoUrl.setText("Video no encontrado");
         }
+
+        // Configurar el botón "Editar" para abrir el ActualizarEjercicioActivity
+        holder.btnEditar.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), ActualizarEjercicioActivity.class);
+            intent.putExtra("ejercicio_id", ejercicio.getId()); // Pasar el ID del ejercicio
+            v.getContext().startActivity(intent); // Utilizar el contexto de la vista
+        });
+
+        // Configurar el botón de eliminar
+        holder.btnEliminar.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Eliminar Ejercicio")
+                    .setMessage("¿Estás seguro de que deseas eliminar este ejercicio?")
+                    .setPositiveButton("Sí", (dialog, which) -> {
+                        int result = ejercicioController.eliminarEjercicio(ejercicio.getId());
+
+                        if (result > 0) {
+                            listaEjercicios.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, listaEjercicios.size());
+                            Toast.makeText(context, "Ejercicio eliminado correctamente", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Error al eliminar el ejercicio", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
+
 
     @Override
     public int getItemCount() {

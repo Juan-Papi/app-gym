@@ -1,5 +1,7 @@
 package com.example.app_gym.models;
 
+import java.util.Objects;
+
 public class Video {
     private int id;
     private String descripcion;

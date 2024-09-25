@@ -30,6 +30,7 @@ public class EjercicioDatos {
         values.put("nombre", ejercicio.getNombre());
         values.put("descripcion", ejercicio.getDescripcion());
         values.put("categoriaId", ejercicio.getCategoriaId());
+        values.put("videoId", ejercicio.getVideoId());
         return db.update("Ejercicio", values, "id = ?", new String[]{String.valueOf(ejercicio.getId())});
     }
 
