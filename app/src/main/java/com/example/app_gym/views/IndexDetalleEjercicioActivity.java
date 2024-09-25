@@ -1,5 +1,6 @@
 package com.example.app_gym.views;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -96,13 +97,37 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
 
             @Override
             public void onEditarClick(int position) {
-                // Acción al hacer clic en "Editar"
+                DetalleEjercicio detalleEjercicio = listaDetallesEjercicio.get(position);
+                Intent intent = new Intent(IndexDetalleEjercicioActivity.this, ActualizarDetalleEjercicioActivity.class);
+                intent.putExtra("detalle_ejercicio_id", detalleEjercicio.getId());
+                intent.putExtra("cliente_id", clienteId);
+                startActivityForResult(intent, 1);
             }
 
             @Override
             public void onEliminarClick(int position) {
-                // Acción al hacer clic en "Eliminar"
+                DetalleEjercicio detalleEjercicio = listaDetallesEjercicio.get(position);
+
+                new AlertDialog.Builder(IndexDetalleEjercicioActivity.this)
+                        .setTitle("Eliminar Detalle de Ejercicio")
+                        .setMessage("¿Estás seguro de que deseas eliminar este detalle de ejercicio?")
+                        .setPositiveButton("Sí", (dialog, which) -> {
+                            // Realizar la acción de eliminación
+                            int resultado = detalleEjercicioController.eliminarDetalleEjercicio(detalleEjercicio.getId());
+                            if (resultado > 0) {
+                                listaDetallesEjercicio.remove(position);
+                                detalleEjercicioAdapter.notifyItemRemoved(position);
+                                detalleEjercicioAdapter.notifyItemRangeChanged(position, listaDetallesEjercicio.size());
+                                Toast.makeText(IndexDetalleEjercicioActivity.this, "Detalle de ejercicio eliminado", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(IndexDetalleEjercicioActivity.this, "Error al eliminar el detalle de ejercicio", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
             }
+
+
         });
 
         recyclerDetalles.setAdapter(detalleEjercicioAdapter);
