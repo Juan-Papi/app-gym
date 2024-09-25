@@ -25,30 +25,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etFiltroBuscarCategorias"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="FILTROS CATEGORIAS"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTituloCategorias" />
+    <!-- Título de la sección de CATEGORÍAS -->
+
+    <!-- RecyclerView para mostrar la lista de categorías -->
 
     <Button
         android:id="@+id/btnNuevaCategoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
         android:text="NUEVA CATEGORÍA"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarCategorias"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Título de la sección de CATEGORÍAS -->
-
-    <!-- RecyclerView para mostrar la lista de categorías -->
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvCategorias"

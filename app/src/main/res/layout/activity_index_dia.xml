@@ -12,26 +12,15 @@
         android:id="@+id/tvInformacionCliente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_rounded_corners"
+        android:padding="8dp"
         android:text="Ronaldo Sanchez Oropeza\n18 años\nMasculino\nPlan: Activo, Inactivo\nInicio: 15/08/2024  Vence: 15/09/2024"
         android:textSize="14sp"
-        android:padding="8dp"
-        android:background="@drawable/background_rounded_corners"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Filtro para buscar días -->
-    <EditText
-        android:id="@+id/etFiltroBuscarDias"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="FILTROS PARA DÍAS"
-        android:minHeight="48dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvInformacionCliente"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
 
     <!-- Botón Nuevo Día -->
 
@@ -48,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarDias" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInformacionCliente" />
 
     <TextView
         android:id="@+id/tvDiasLabel"

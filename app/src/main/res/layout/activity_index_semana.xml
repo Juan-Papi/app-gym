@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -11,49 +12,42 @@
         android:id="@+id/tvInformacionCliente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_rounded_corners"
+        android:padding="8dp"
         android:text="Información del Cliente"
         android:textSize="14sp"
-        android:padding="8dp"
-        android:background="@drawable/background_rounded_corners"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Filtro para buscar semanas -->
-    <EditText
-        android:id="@+id/etFiltroBuscarSemanas"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="FILTROS PARA SEMANA"
-        android:minHeight="48dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvInformacionCliente"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
 
     <!-- Botón Nueva Semana -->
+
+    <!-- Botón Estado Cliente -->
+
+    <!-- Título SEMANAS -->
+
     <Button
         android:id="@+id/btnNuevaSemana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:text="Nueva Semana"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarSemanas"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInformacionCliente" />
 
-    <!-- Botón Estado Cliente -->
     <Button
         android:id="@+id/btnEstadoCliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:text="Estado Cliente"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarSemanas"
         app:layout_constraintStart_toEndOf="@id/btnNuevaSemana"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInformacionCliente" />
 
-    <!-- Título SEMANAS -->
     <TextView
         android:id="@+id/tvTituloSemanas"
         android:layout_width="wrap_content"

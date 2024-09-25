@@ -23,31 +23,20 @@
     <!-- Filtros para buscar videos -->
 
     <!-- Botón NUEVO VIDEO -->
-    <EditText
-        android:id="@+id/etFiltroBuscarVideos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="FILTROS PARA BUSCAR VIDEOS"
-        android:minHeight="48dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTituloVideos" />
+
+    <!-- Título de la sección de VIDEOS -->
+
+    <!-- RecyclerView para mostrar la lista de videos -->
 
     <Button
         android:id="@+id/btnNuevoVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
         android:text="NUEVO VIDEO"
-        app:layout_constraintTop_toBottomOf="@id/etFiltroBuscarVideos"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Título de la sección de VIDEOS -->
-
-    <!-- RecyclerView para mostrar la lista de videos -->
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvVideos"
