@@ -102,6 +102,10 @@
             android:name=".views.ActualizarDetalleEjercicioActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".views.ActualizarVideoActivity"
+            android:exported="true">
+        </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

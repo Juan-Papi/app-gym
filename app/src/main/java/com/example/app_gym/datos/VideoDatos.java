@@ -80,7 +80,7 @@ public class VideoDatos {
                     video.setDescripcion(cursor.getString(descripcionIndex));
                 }
 
-                int urlIndex = cursor.getColumnIndex("video_url");
+                int urlIndex = cursor.getColumnIndex("videoUrl");
                 if (urlIndex >= 0) {
                     video.setVideoUrl(cursor.getString(urlIndex));
                 }
