@@ -39,9 +39,6 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
         Categoria categoria = listaCategorias.get(position);
         holder.tvNombreCategoria.setText(categoria.getNombre());
 
-        holder.btnVer.setOnClickListener(v -> {
-            // Acción para ver categoría
-        });
         holder.btnEditar.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), ActualizarCategoriaActivity.class);
             intent.putExtra("categoria_id", categoria.getId()); // Pasar el ID de la categoría
@@ -85,12 +82,11 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
     public static class CategoriaViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvNombreCategoria;
-        Button btnVer, btnEditar, btnEliminar;
+        Button btnEditar, btnEliminar;
 
         public CategoriaViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombreCategoria = itemView.findViewById(R.id.tvNombreCategoria);
-            btnVer = itemView.findViewById(R.id.btnVer);
             btnEditar = itemView.findViewById(R.id.btnEditar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }

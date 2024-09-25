@@ -88,13 +88,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     public static class VideoViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvNombreVideo, tvUrlVideo;
-        Button btnVer, btnEditar, btnEliminar;
+        Button btnEditar, btnEliminar;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombreVideo = itemView.findViewById(R.id.tvNombreVideo);
             tvUrlVideo = itemView.findViewById(R.id.tvUrlVideo);
-            btnVer = itemView.findViewById(R.id.btnVer);
             btnEditar = itemView.findViewById(R.id.btnEditar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }

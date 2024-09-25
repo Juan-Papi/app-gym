@@ -102,7 +102,7 @@ public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.Ejer
     public static class EjercicioViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvNombreEjercicio, tvDescripcionEjercicio, tvCategoriaNombre, tvVideoUrl;
-        Button btnVer, btnEditar, btnEliminar;
+        Button btnEditar, btnEliminar;
 
         public EjercicioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,7 +110,6 @@ public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.Ejer
             tvDescripcionEjercicio = itemView.findViewById(R.id.tvDescripcionEjercicio);
             tvCategoriaNombre = itemView.findViewById(R.id.tvCategoriaNombre);
             tvVideoUrl = itemView.findViewById(R.id.tvVideoUrl);
-            btnVer = itemView.findViewById(R.id.btnVer);
             btnEditar = itemView.findViewById(R.id.btnEditar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }
