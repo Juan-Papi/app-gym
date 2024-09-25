@@ -18,7 +18,6 @@ public class DetalleEjercicioAdapter extends RecyclerView.Adapter<DetalleEjercic
 
     // Interface para manejar los eventos de clic en los botones
     public interface OnDetalleEjercicioClickListener {
-        void onVerClick(int position);
         void onEditarClick(int position);
         void onEliminarClick(int position);
     }
@@ -44,8 +43,6 @@ public class DetalleEjercicioAdapter extends RecyclerView.Adapter<DetalleEjercic
         holder.tvRepeticiones.setText("Repeticiones: " + detalleEjercicio.getRepeticiones());
         holder.tvSeries.setText("Series: " + detalleEjercicio.getSeries());
 
-        // Asignar eventos a los botones
-        holder.btnVer.setOnClickListener(v -> listener.onVerClick(position));
         holder.btnEditar.setOnClickListener(v -> listener.onEditarClick(position));
         holder.btnEliminar.setOnClickListener(v -> listener.onEliminarClick(position));
     }

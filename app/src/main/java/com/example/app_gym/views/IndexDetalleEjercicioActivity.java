@@ -91,11 +91,6 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
         // Configurar el adaptador
         detalleEjercicioAdapter = new DetalleEjercicioAdapter(listaDetallesEjercicio, new DetalleEjercicioAdapter.OnDetalleEjercicioClickListener() {
             @Override
-            public void onVerClick(int position) {
-                // Acción al hacer clic en "Ver"
-            }
-
-            @Override
             public void onEditarClick(int position) {
                 DetalleEjercicio detalleEjercicio = listaDetallesEjercicio.get(position);
                 Intent intent = new Intent(IndexDetalleEjercicioActivity.this, ActualizarDetalleEjercicioActivity.class);

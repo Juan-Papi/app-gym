@@ -1,5 +1,6 @@
 package com.example.app_gym;
 
+import android.app.AlertDialog;
 import android.content.Intent; // Agregar esta importación
 import android.os.Bundle;
 import android.widget.Button;
@@ -79,29 +80,38 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
         Cliente cliente = listaClientes.get(position);
         Intent intent = new Intent(MainActivity.this, ActualizarClienteActivity.class);
         intent.putExtra("cliente_id", cliente.getId()); // Pasar el ID del cliente
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_ADD_CLIENTE); // Cambiar a startActivityForResult
     }
+
 
     @Override
     public void onEliminarClick(int position) {
         // Obtener el cliente que se va a eliminar
         Cliente cliente = listaClientes.get(position);
 
-        // Eliminar el cliente de la base de datos
-        int result = clienteController.eliminarCliente(cliente.getId());
+        // Mostrar un AlertDialog para confirmar la eliminación
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar Cliente")
+                .setMessage("¿Estás seguro de que deseas eliminar a " + cliente.getNombre() + " " + cliente.getApellido() + "?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    // Eliminar el cliente de la base de datos
+                    int result = clienteController.eliminarCliente(cliente.getId());
 
-        if (result > 0) {
-            // Recargar la lista de clientes desde la base de datos
-            listaClientes.clear();
-            listaClientes.addAll(clienteController.obtenerTodosLosClientes());
+                    if (result > 0) {
+                        // Recargar la lista de clientes desde la base de datos
+                        listaClientes.clear();
+                        listaClientes.addAll(clienteController.obtenerTodosLosClientes());
 
-            // Notificar al adaptador que los datos han cambiado
-            clienteAdapter.notifyDataSetChanged();
+                        // Notificar al adaptador que los datos han cambiado
+                        clienteAdapter.notifyDataSetChanged();
 
-            Toast.makeText(this, "Cliente eliminado correctamente", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Error al eliminar el cliente", Toast.LENGTH_SHORT).show();
-        }
+                        Toast.makeText(this, "Cliente eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Error al eliminar el cliente", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", null) // El botón "No" cierra el diálogo sin hacer nada
+                .show();
     }
 
 
@@ -109,11 +119,12 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ADD_CLIENTE && resultCode == RESULT_OK) {
-            // Cliente agregado, recargar la lista de clientes
+        if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_ADD_CLIENTE)) {
+            // Cliente agregado o actualizado, recargar la lista de clientes
             listaClientes.clear();
             listaClientes.addAll(clienteController.obtenerTodosLosClientes());
             clienteAdapter.notifyDataSetChanged();
         }
     }
+
 }
