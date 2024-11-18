@@ -9,13 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.CategoriaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Categoria;
+import com.example.app_gym.negocio.CategoriaNegocio;
 
 public class ActualizarCategoriaActivity extends AppCompatActivity {
 
-    private CategoriaController categoriaController;
+    private CategoriaNegocio categoriaNegocio;
     private EditText etNombreCategoria;
     private Button btnGuardarCategoria, btnVolver;
     private int categoriaId;
@@ -28,7 +28,7 @@ public class ActualizarCategoriaActivity extends AppCompatActivity {
         // Inicializa la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        categoriaController = new CategoriaController(db);
+        categoriaNegocio = new CategoriaNegocio(db);
 
         // Referenciar los componentes de la vista
         etNombreCategoria = findViewById(R.id.etNombreCategoria);
@@ -39,7 +39,7 @@ public class ActualizarCategoriaActivity extends AppCompatActivity {
         categoriaId = getIntent().getIntExtra("categoria_id", -1);
 
         // Cargar los datos de la categoría
-        Categoria categoria = categoriaController.obtenerCategoria(categoriaId);
+        Categoria categoria = categoriaNegocio.obtenerCategoria(categoriaId);
         if (categoria != null) {
             etNombreCategoria.setText(categoria.getNombre());
         }
@@ -64,7 +64,7 @@ public class ActualizarCategoriaActivity extends AppCompatActivity {
         categoria.setId(categoriaId);
         categoria.setNombre(nombreCategoria);
 
-        int resultado = categoriaController.actualizarCategoria(categoria);
+        int resultado = categoriaNegocio.actualizarCategoria(categoria);
         if (resultado > 0) {
             Toast.makeText(this, "Categoría actualizada correctamente", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);  // Indicar que la operación fue exitosa

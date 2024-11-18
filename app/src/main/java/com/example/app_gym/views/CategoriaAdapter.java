@@ -13,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.CategoriaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Categoria;
+import com.example.app_gym.negocio.CategoriaNegocio;
 
 import java.util.List;
 
@@ -51,8 +51,8 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
                     .setMessage("¿Estás seguro de que deseas eliminar esta categoría?")
                     .setPositiveButton("Sí", (dialog, which) -> {
                         // Eliminar la categoría de la base de datos
-                        CategoriaController categoriaController = new CategoriaController(new DatabaseHelper(holder.itemView.getContext()).getWritableDatabase());
-                        int result = categoriaController.eliminarCategoria(categoria.getId());
+                        CategoriaNegocio categorianNegocio = new CategoriaNegocio(new DatabaseHelper(holder.itemView.getContext()).getWritableDatabase());
+                        int result = categorianNegocio.eliminarCategoria(categoria.getId());
 
                         if (result > 0) {
                             // Eliminar la categoría de la lista y notificar al adaptador

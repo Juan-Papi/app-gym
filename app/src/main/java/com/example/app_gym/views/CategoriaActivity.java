@@ -5,17 +5,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.CategoriaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Categoria;
+import com.example.app_gym.negocio.CategoriaNegocio;
 
 public class CategoriaActivity extends AppCompatActivity {
 
-    private CategoriaController categoriaController;
+    private CategoriaNegocio categoriaNegocio;
     private EditText etNombreCategoria;
     private Button btnGuardarCategoria;
 
@@ -27,7 +25,7 @@ public class CategoriaActivity extends AppCompatActivity {
         // Inicializa la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        categoriaController = new CategoriaController(db);
+        categoriaNegocio = new CategoriaNegocio(db);
 
         // Referencias a los componentes de la vista
         etNombreCategoria = findViewById(R.id.etNombreCategoria);
@@ -47,7 +45,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 Categoria nuevaCategoria = new Categoria();
                 nuevaCategoria.setNombre(nombreCategoria);
 
-                categoriaController.crearNuevaCategoria(nuevaCategoria);
+                categoriaNegocio.agregarCategoria(nuevaCategoria);
                 Toast.makeText(CategoriaActivity.this, "Categoría guardada", Toast.LENGTH_SHORT).show();
 
                 // Finalizar la actividad y volver a IndexCategoriaActivity

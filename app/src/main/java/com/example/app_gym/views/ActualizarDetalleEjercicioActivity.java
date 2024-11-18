@@ -9,22 +9,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
-import com.example.app_gym.controllers.DetalleEjercicioController;
-import com.example.app_gym.controllers.EjercicioController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.DetalleEjercicio;
 import com.example.app_gym.models.Ejercicio;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.DetalleEjercicioNegocio;
+import com.example.app_gym.negocio.EjercicioNegocio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActualizarDetalleEjercicioActivity extends AppCompatActivity {
 
-    private EjercicioController ejercicioController;
-    private DetalleEjercicioController detalleEjercicioController;
-    private ClienteController clienteController;
+    private EjercicioNegocio ejercicioNegocio;
+    private DetalleEjercicioNegocio detalleEjercicioNegocio;
+    private ClienteNegocio clienteNegocio;
     private TextView tvInformacionCliente;
     private Spinner spinnerEjercicios;
     private EditText etSeries, etRepeticiones;
@@ -40,9 +40,9 @@ public class ActualizarDetalleEjercicioActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        ejercicioController = new EjercicioController(dbHelper.getWritableDatabase());
-        detalleEjercicioController = new DetalleEjercicioController(dbHelper.getWritableDatabase());
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        ejercicioNegocio = new EjercicioNegocio(dbHelper.getWritableDatabase());
+        detalleEjercicioNegocio = new DetalleEjercicioNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
 
         // Obtener el ID del detalle de ejercicio
         detalleEjercicioId = getIntent().getIntExtra("detalle_ejercicio_id", -1);
@@ -56,10 +56,10 @@ public class ActualizarDetalleEjercicioActivity extends AppCompatActivity {
         Button btnGuardar = findViewById(R.id.btnGuardar);
 
         // Cargar los datos del detalle de ejercicio
-        detalleEjercicio = detalleEjercicioController.obtenerDetalleEjercicio(detalleEjercicioId);
+        detalleEjercicio = detalleEjercicioNegocio.obtenerDetalleEjercicio(detalleEjercicioId);
 
         // Obtener la información del cliente y mostrarla
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
         if (cliente != null) {
             mostrarInformacionCliente(cliente);
         }
@@ -88,7 +88,7 @@ public class ActualizarDetalleEjercicioActivity extends AppCompatActivity {
     }
 
     private void cargarEjercicios() {
-        listaEjercicios = ejercicioController.obtenerTodosLosEjerciciosConRelaciones();
+        listaEjercicios = ejercicioNegocio.obtenerTodosLosEjerciciosConRelaciones();
         List<String> nombresEjercicios = new ArrayList<>();
 
         for (Ejercicio ejercicio : listaEjercicios) {
@@ -123,7 +123,7 @@ public class ActualizarDetalleEjercicioActivity extends AppCompatActivity {
         detalleEjercicio.setSeries(series);
         detalleEjercicio.setRepeticiones(repeticiones);
 
-        int result = detalleEjercicioController.actualizarDetalleEjercicio(detalleEjercicio);
+        int result = detalleEjercicioNegocio.actualizarDetalleEjercicio(detalleEjercicio);
         if (result > 0) {
             Toast.makeText(this, "Ejercicio actualizado correctamente.", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Enviar resultado de éxito

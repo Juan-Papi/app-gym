@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.VideoController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Video;
+import com.example.app_gym.negocio.VideoNegocio;
 
 public class ActualizarVideoActivity extends AppCompatActivity {
 
-    private VideoController videoController;
+    private VideoNegocio videoNegocio;
     private EditText etDescripcionVideo, etUrlVideo;
     private Button btnGuardarVideo, btnVolver;
     private int videoId;
@@ -27,7 +27,7 @@ public class ActualizarVideoActivity extends AppCompatActivity {
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        videoController = new VideoController(db);
+        videoNegocio = new VideoNegocio(db);
 
         // Referencias a los componentes de la vista
         etDescripcionVideo = findViewById(R.id.etDescripcionVideo);
@@ -39,7 +39,7 @@ public class ActualizarVideoActivity extends AppCompatActivity {
         videoId = getIntent().getIntExtra("video_id", -1);
 
         // Cargar los datos del video
-        Video video = videoController.obtenerVideo(videoId);
+        Video video = videoNegocio.obtenerVideo(videoId);
         if (video != null) {
             cargarDatosVideo(video);
         }
@@ -74,7 +74,7 @@ public class ActualizarVideoActivity extends AppCompatActivity {
         video.setDescripcion(descripcion);
         video.setVideoUrl(url);
 
-        int resultado = videoController.actualizarVideo(video);
+        int resultado = videoNegocio.actualizarVideo(video);
         if (resultado > 0) {
             Toast.makeText(this, "Video actualizado correctamente", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Indica que la operación fue exitosa

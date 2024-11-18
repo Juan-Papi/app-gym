@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.EjercicioController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Ejercicio;
-import com.example.app_gym.views.EjercicioAdapter;
+import com.example.app_gym.negocio.EjercicioNegocio;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class IndexEjercicioActivity extends AppCompatActivity {
     private RecyclerView recyclerEjercicios;
     private EjercicioAdapter ejercicioAdapter;
     private List<Ejercicio> listaEjercicios;
-    private EjercicioController ejercicioController;
+    private EjercicioNegocio ejercicioNegocio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +30,17 @@ public class IndexEjercicioActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        ejercicioController = new EjercicioController(dbHelper.getWritableDatabase());
+        ejercicioNegocio = new EjercicioNegocio(dbHelper.getWritableDatabase());
 
         // Referenciamos el RecyclerView
         recyclerEjercicios = findViewById(R.id.recyclerEjercicios);
         recyclerEjercicios.setLayoutManager(new LinearLayoutManager(this));
 
         // Obtenemos la lista de ejercicios desde el controlador
-        listaEjercicios = ejercicioController.obtenerTodosLosEjerciciosConRelaciones();
+        listaEjercicios = ejercicioNegocio.obtenerTodosLosEjerciciosConRelaciones();
 
         // Configuramos el adaptador
-        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioController,this);
+        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioNegocio,this);
         recyclerEjercicios.setAdapter(ejercicioAdapter);
 
         Button btnVolver = findViewById(R.id.btnVolver);
@@ -81,8 +80,8 @@ public class IndexEjercicioActivity extends AppCompatActivity {
     }
 
     private void actualizarListaEjercicios() {
-        listaEjercicios = ejercicioController.obtenerTodosLosEjerciciosConRelaciones();
-        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioController,this);
+        listaEjercicios = ejercicioNegocio.obtenerTodosLosEjerciciosConRelaciones();
+        ejercicioAdapter = new EjercicioAdapter(listaEjercicios, ejercicioNegocio,this);
         recyclerEjercicios.setAdapter(ejercicioAdapter);
         ejercicioAdapter.notifyDataSetChanged();
     }

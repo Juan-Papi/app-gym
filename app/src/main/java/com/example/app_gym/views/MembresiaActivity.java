@@ -9,18 +9,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.MembresiaController;
-import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.Membresia;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.MembresiaNegocio;
 
 import java.util.Calendar;
 
 public class MembresiaActivity extends AppCompatActivity {
 
-    private MembresiaController membresiaController;
-    private ClienteController clienteController;
+    private MembresiaNegocio membresiaNegocio;
+    private ClienteNegocio clienteNegocio;
     private EditText etFechaInicio, etFechaVence;
     private TextView tvInformacionCliente;
     private int clienteId;
@@ -32,8 +32,8 @@ public class MembresiaActivity extends AppCompatActivity {
 
         // Inicializa la base de datos y los controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        membresiaController = new MembresiaController(dbHelper.getWritableDatabase());
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        membresiaNegocio = new MembresiaNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio= new ClienteNegocio(dbHelper.getWritableDatabase());
 
         // Obtiene el clienteId de la intención
         clienteId = getIntent().getIntExtra("cliente_id", -1);
@@ -60,7 +60,7 @@ public class MembresiaActivity extends AppCompatActivity {
     }
 
     private void mostrarInformacionCliente() {
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
 
         if (cliente != null) {
             String informacion = cliente.getNombre() + " " + cliente.getApellido() + "\n" +
@@ -101,7 +101,7 @@ public class MembresiaActivity extends AppCompatActivity {
         nuevaMembresia.setFechaVencimiento(fechaVence);
         nuevaMembresia.setClienteId(clienteId);
 
-        long result = membresiaController.crearNuevaMembresia(nuevaMembresia);
+        long result = membresiaNegocio.agregarMembresia(nuevaMembresia);
         if (result != -1) {
             Toast.makeText(this, "Membresía guardada correctamente", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Establece el resultado como RESULT_OK

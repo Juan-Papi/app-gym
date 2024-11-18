@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.VideoController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Video;
+import com.example.app_gym.negocio.VideoNegocio;
 
 public class VideoActivity extends AppCompatActivity {
 
-    private VideoController videoController;
+    private VideoNegocio videoNegocio;
     private EditText etDescripcionVideo, etUrlVideo;
     private Button btnGuardarVideo;
 
@@ -26,7 +26,7 @@ public class VideoActivity extends AppCompatActivity {
         // Inicializa la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        videoController = new VideoController(db);
+        videoNegocio = new VideoNegocio(db);
 
         // Referencias a los componentes de la vista
         etDescripcionVideo = findViewById(R.id.etDescripcionVideo);
@@ -49,7 +49,7 @@ public class VideoActivity extends AppCompatActivity {
                 nuevoVideo.setVideoUrl(url);
 
                 // Guarda el video en la base de datos
-                long resultado = videoController.crearNuevoVideo(nuevoVideo);
+                long resultado = videoNegocio.agregarVideo(nuevoVideo);
 
                 if (resultado != -1) {
                     Toast.makeText(VideoActivity.this, "Video guardado", Toast.LENGTH_SHORT).show();

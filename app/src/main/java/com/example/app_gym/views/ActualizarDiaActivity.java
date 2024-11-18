@@ -9,14 +9,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.RutinaDiariaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.negocio.RutinaDiariaNegocio;
+
 import java.util.Calendar;
 
 public class ActualizarDiaActivity extends AppCompatActivity {
 
-    private RutinaDiariaController rutinaDiariaController;
+    private RutinaDiariaNegocio rutinaDiariaNegocio;
     private Spinner spinnerDias;
     private EditText etFecha;
     private int rutinaDiariaId;
@@ -29,7 +30,7 @@ public class ActualizarDiaActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        rutinaDiariaController = new RutinaDiariaController(dbHelper.getWritableDatabase());
+        rutinaDiariaNegocio = new RutinaDiariaNegocio(dbHelper.getWritableDatabase());
 
         // Obtener el rutinaDiariaId desde el Intent
         rutinaDiariaId = getIntent().getIntExtra("rutina_diaria_id", -1);
@@ -60,7 +61,7 @@ public class ActualizarDiaActivity extends AppCompatActivity {
 
     // Método para cargar los datos de la rutina diaria
     private void cargarRutinaDiaria() {
-        rutinaDiariaActual = rutinaDiariaController.obtenerRutinaDiaria(rutinaDiariaId);
+        rutinaDiariaActual = rutinaDiariaNegocio.obtenerRutinaDiaria(rutinaDiariaId);
 
         if (rutinaDiariaActual != null) {
             // Seleccionar el día correspondiente en el spinner
@@ -108,7 +109,7 @@ public class ActualizarDiaActivity extends AppCompatActivity {
         rutinaDiariaActual.setNombre(diaSeleccionado);
         rutinaDiariaActual.setFecha(fecha);
 
-        int result = rutinaDiariaController.actualizarRutinaDiaria(rutinaDiariaActual);
+        int result = rutinaDiariaNegocio.actualizarRutinaDiaria(rutinaDiariaActual);
         if (result > 0) {
             Toast.makeText(this, "Día actualizado correctamente.", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Establecer el resultado como RESULT_OK

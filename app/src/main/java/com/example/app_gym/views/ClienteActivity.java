@@ -14,11 +14,12 @@ import com.example.app_gym.R;
 import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
+import com.example.app_gym.negocio.ClienteNegocio;
 
 import java.util.Calendar;
 
 public class ClienteActivity extends AppCompatActivity {
-    private ClienteController clienteController;
+    private ClienteNegocio clienteNegocio;
     private EditText etNombre, etApellido, etEdad, etFechaEntrada, etObs;
     private Spinner spinnerEstado;
     private Button btnGuardar;
@@ -31,7 +32,7 @@ public class ClienteActivity extends AppCompatActivity {
         // Inicializa la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        clienteController = new ClienteController(db);
+        clienteNegocio = new ClienteNegocio(db);
 
         // Referencias a los componentes de la vista
         etNombre = findViewById(R.id.etNombre);
@@ -95,7 +96,7 @@ public class ClienteActivity extends AppCompatActivity {
             nuevoCliente.setObs(obs);
 
             // Guarda el cliente en la base de datos
-            clienteController.crearNuevoCliente(nuevoCliente);
+            clienteNegocio.agregarCliente(nuevoCliente);
             Toast.makeText(ClienteActivity.this, "Cliente guardado", Toast.LENGTH_SHORT).show();
 
             // Limpiar el formulario después de guardar

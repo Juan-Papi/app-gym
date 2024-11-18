@@ -1,22 +1,21 @@
 package com.example.app_gym.views;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.RutinaSemanalController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.RutinaSemanal;
+import com.example.app_gym.negocio.RutinaSemanalNegocio;
 
 import java.util.Calendar;
 
 public class ActualizarSemanaActivity extends AppCompatActivity {
 
-    private RutinaSemanalController rutinaSemanalController;
+    private RutinaSemanalNegocio rutinaSemanalNegocio;
     private EditText etNombreSemana, etFechaSemana;
     private Button btnGuardarSemana;
     private int rutinaSemanalId; // ID de la rutina semanal que se recibirá desde la pantalla anterior
@@ -28,7 +27,7 @@ public class ActualizarSemanaActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        rutinaSemanalController = new RutinaSemanalController(dbHelper.getWritableDatabase());
+        rutinaSemanalNegocio = new RutinaSemanalNegocio(dbHelper.getWritableDatabase());
 
         // Obtener el rutinaSemanalId pasado desde IndexSemanaActivity
         rutinaSemanalId = getIntent().getIntExtra("rutina_semanal_id", -1);
@@ -67,7 +66,7 @@ public class ActualizarSemanaActivity extends AppCompatActivity {
 
     private void cargarDatosRutinaSemanal() {
         if (rutinaSemanalId != -1) {
-            RutinaSemanal rutinaSemanal = rutinaSemanalController.obtenerRutinaSemanal(rutinaSemanalId);
+            RutinaSemanal rutinaSemanal = rutinaSemanalNegocio.obtenerRutinaSemanal(rutinaSemanalId);
             if (rutinaSemanal != null) {
                 etNombreSemana.setText(rutinaSemanal.getNombre());
                 etFechaSemana.setText(rutinaSemanal.getFecha());
@@ -95,7 +94,7 @@ public class ActualizarSemanaActivity extends AppCompatActivity {
         rutinaSemanal.setFecha(fecha);
         rutinaSemanal.setClienteId(clienteId);
 
-        int resultado = rutinaSemanalController.actualizarRutinaSemanal(rutinaSemanal);
+        int resultado = rutinaSemanalNegocio.actualizarRutinaSemanal(rutinaSemanal);
 
         if (resultado > 0) {
             Toast.makeText(this, "Rutina semanal actualizada exitosamente", Toast.LENGTH_SHORT).show();

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,13 +14,14 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
-import com.example.app_gym.controllers.RutinaDiariaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.RutinaDiaria;
 import java.util.List;
 
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.DetalleEjercicioNegocio;
+import com.example.app_gym.negocio.RutinaDiariaNegocio;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -34,15 +34,13 @@ import com.itextpdf.layout.element.Link;
 
 
 import android.os.Environment;
-import com.example.app_gym.controllers.DetalleEjercicioController;
-import com.example.app_gym.models.DetalleEjercicio;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 
 public class IndexDiaActivity extends AppCompatActivity {
 
-    private ClienteController clienteController;
-    private RutinaDiariaController rutinaDiariaController;
-    private DetalleEjercicioController detalleEjercicioController;
+    private ClienteNegocio clienteNegocio;
+    private RutinaDiariaNegocio rutinaDiariaNegocio;
+    private DetalleEjercicioNegocio detalleEjercicioNegocio;
     private TextView tvInformacionCliente;
     private RecyclerView recyclerDias;
     private RutinaDiariaAdapter rutinaDiariaAdapter;
@@ -64,9 +62,9 @@ public class IndexDiaActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
-        rutinaDiariaController = new RutinaDiariaController(dbHelper.getWritableDatabase());
-        detalleEjercicioController = new DetalleEjercicioController(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
+        rutinaDiariaNegocio = new RutinaDiariaNegocio(dbHelper.getWritableDatabase());
+        detalleEjercicioNegocio = new DetalleEjercicioNegocio(dbHelper.getWritableDatabase());
 
         // Obtener los IDs del cliente y de la semana desde el Intent
         clienteId = getIntent().getIntExtra("cliente_id", -1);
@@ -74,7 +72,7 @@ public class IndexDiaActivity extends AppCompatActivity {
 
         // Mostrar la información del cliente
         tvInformacionCliente = findViewById(R.id.tvInformacionCliente);
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
         if (cliente != null) {
             mostrarInformacionCliente(cliente);
         }
@@ -84,7 +82,7 @@ public class IndexDiaActivity extends AppCompatActivity {
         recyclerDias.setLayoutManager(new LinearLayoutManager(this));
 
         // Obtener la lista de rutinas diarias de la semana y configurar el adaptador
-        listaRutinasDiarias = rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId);
+        listaRutinasDiarias = rutinaDiariaNegocio.obtenerRutinasDiariasDeSemana(semanaId);
 
         rutinaDiariaAdapter = new RutinaDiariaAdapter(listaRutinasDiarias, new RutinaDiariaAdapter.OnRutinaDiariaClickListener() {
             @Override
@@ -119,7 +117,7 @@ public class IndexDiaActivity extends AppCompatActivity {
                             RutinaDiaria rutinaDiaria = listaRutinasDiarias.get(position);
 
                             // Eliminar la rutina diaria a través del controlador
-                            int resultado = rutinaDiariaController.eliminarRutinaDiaria(rutinaDiaria.getId());
+                            int resultado = rutinaDiariaNegocio.eliminarRutinaDiaria(rutinaDiaria.getId());
 
                             if (resultado > 0) {
                                 listaRutinasDiarias.remove(position);
@@ -184,7 +182,7 @@ public class IndexDiaActivity extends AppCompatActivity {
     // Método para actualizar la lista de rutinas diarias
     private void actualizarListaRutinasDiarias() {
         listaRutinasDiarias.clear(); // Limpiar la lista actual
-        listaRutinasDiarias.addAll(rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId)); // Agregar los elementos actualizados
+        listaRutinasDiarias.addAll(rutinaDiariaNegocio.obtenerRutinasDiariasDeSemana(semanaId)); // Agregar los elementos actualizados
         rutinaDiariaAdapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
     }
 
@@ -212,7 +210,7 @@ public class IndexDiaActivity extends AppCompatActivity {
             document.add(fecha);
 
             // Obtener detalles de ejercicios
-            List<Map<String, Object>> detallesConRelaciones = detalleEjercicioController.obtenerDetallesConRelaciones(rutinaDiaria.getId());
+            List<Map<String, Object>> detallesConRelaciones = detalleEjercicioNegocio.obtenerDetallesConRelaciones(rutinaDiaria.getId());
 
             // Crear tabla y agregar encabezados con formato en negrita
             float[] columnWidths = {100f, 150f, 150f, 50f, 50f};

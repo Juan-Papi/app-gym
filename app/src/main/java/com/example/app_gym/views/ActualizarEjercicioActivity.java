@@ -8,22 +8,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.EjercicioController;
-import com.example.app_gym.controllers.CategoriaController;
-import com.example.app_gym.controllers.VideoController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Categoria;
 import com.example.app_gym.models.Ejercicio;
 import com.example.app_gym.models.Video;
+import com.example.app_gym.negocio.CategoriaNegocio;
+import com.example.app_gym.negocio.EjercicioNegocio;
+import com.example.app_gym.negocio.VideoNegocio;
 
 import java.util.List;
 
 public class ActualizarEjercicioActivity extends AppCompatActivity {
-    private EjercicioController ejercicioController;
-    private CategoriaController categoriaController;
-    private VideoController videoController;
+    private EjercicioNegocio ejercicioNegocio;
+    private CategoriaNegocio categoriaNegocio;
+    private VideoNegocio videoNegocio;
     private EditText etNombreEjercicio, etDescripcionEjercicio;
     private Spinner spinnerCategoria, spinnerVideo;
     private Button btnGuardarEjercicio;
@@ -40,9 +39,9 @@ public class ActualizarEjercicioActivity extends AppCompatActivity {
         // Inicializa la base de datos y los controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ejercicioController = new EjercicioController(db);
-        categoriaController = new CategoriaController(db);
-        videoController = new VideoController(db);
+        ejercicioNegocio = new EjercicioNegocio(db);
+        categoriaNegocio = new CategoriaNegocio(db);
+        videoNegocio = new VideoNegocio(db);
 
         // Referencias a los componentes de la vista
         etNombreEjercicio = findViewById(R.id.etNombreEjercicio);
@@ -52,13 +51,13 @@ public class ActualizarEjercicioActivity extends AppCompatActivity {
         btnGuardarEjercicio = findViewById(R.id.btnGuardarEjercicio);
 
         // Cargar opciones en el Spinner de Categoría
-        listaCategorias = categoriaController.obtenerTodasLasCategorias();
+        listaCategorias = categoriaNegocio.obtenerTodasLasCategorias();
         ArrayAdapter<Categoria> adapterCategorias = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
         adapterCategorias.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(adapterCategorias);
 
         // Cargar opciones en el Spinner de Video
-        listaVideos = videoController.obtenerTodosLosVideos();
+        listaVideos = videoNegocio.obtenerTodosLosVideos();
         ArrayAdapter<Video> adapterVideos = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaVideos);
         adapterVideos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerVideo.setAdapter(adapterVideos);
@@ -68,7 +67,7 @@ public class ActualizarEjercicioActivity extends AppCompatActivity {
         ejercicioId = getIntent().getIntExtra("ejercicio_id", -1);
 
         // Cargar los datos del ejercicio
-        Ejercicio ejercicio = ejercicioController.obtenerEjercicio(ejercicioId);
+        Ejercicio ejercicio = ejercicioNegocio.obtenerEjercicio(ejercicioId);
         if (ejercicio != null) {
             cargarDatosEjercicio(ejercicio);
         }
@@ -145,7 +144,7 @@ public class ActualizarEjercicioActivity extends AppCompatActivity {
         ejercicioActualizado.setCategoriaId(categoriaId);
         ejercicioActualizado.setVideoId(videoId);
 
-        int result = ejercicioController.actualizarEjercicio(ejercicioActualizado);
+        int result = ejercicioNegocio.actualizarEjercicio(ejercicioActualizado);
         if (result > 0) {
             Toast.makeText(this, "Ejercicio actualizado correctamente", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);  // Indica que se guardó correctamente

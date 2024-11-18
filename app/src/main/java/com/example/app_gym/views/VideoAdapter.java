@@ -13,10 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.VideoController;
 import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Categoria;
 import com.example.app_gym.models.Video;
+import com.example.app_gym.negocio.VideoNegocio;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                     .setMessage("¿Estás seguro de que deseas eliminar este video?")
                     .setPositiveButton("Sí", (dialog, which) -> {
                         // Eliminar el video de la base de datos
-                        VideoController videoController = new VideoController(new DatabaseHelper(holder.itemView.getContext()).getWritableDatabase());
+                        VideoNegocio videoController = new VideoNegocio(new DatabaseHelper(holder.itemView.getContext()).getWritableDatabase());
                         int resultado = videoController.eliminarVideo(video.getId());
 
                         if (resultado > 0) {

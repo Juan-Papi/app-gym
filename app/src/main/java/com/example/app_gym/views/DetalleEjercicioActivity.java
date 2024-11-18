@@ -1,7 +1,6 @@
 package com.example.app_gym.views;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,22 +9,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
-import com.example.app_gym.controllers.DetalleEjercicioController;
-import com.example.app_gym.controllers.EjercicioController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.Ejercicio;
 import com.example.app_gym.models.DetalleEjercicio;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.DetalleEjercicioNegocio;
+import com.example.app_gym.negocio.EjercicioNegocio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetalleEjercicioActivity extends AppCompatActivity {
 
-    private EjercicioController ejercicioController;
-    private DetalleEjercicioController detalleEjercicioController;
-    private ClienteController clienteController;
+    private EjercicioNegocio ejercicioNegocio;
+    private DetalleEjercicioNegocio detalleEjercicioNegocio;
+    private ClienteNegocio clienteNegocio;
     private TextView tvInformacionCliente;
     private Spinner spinnerEjercicios;
     private EditText etSeries, etRepeticiones;
@@ -40,9 +39,9 @@ public class DetalleEjercicioActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        ejercicioController = new EjercicioController(dbHelper.getWritableDatabase());
-        detalleEjercicioController = new DetalleEjercicioController(dbHelper.getWritableDatabase());
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        ejercicioNegocio = new EjercicioNegocio(dbHelper.getWritableDatabase());
+        detalleEjercicioNegocio = new DetalleEjercicioNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
 
         tvInformacionCliente = findViewById(R.id.tvInformacionCliente);
 
@@ -51,7 +50,7 @@ public class DetalleEjercicioActivity extends AppCompatActivity {
         clienteId = getIntent().getIntExtra("cliente_id", -1);
 
         // Obtener la información del cliente y mostrarla
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
         if (cliente != null) {
             mostrarInformacionCliente(cliente);
         }
@@ -77,7 +76,7 @@ public class DetalleEjercicioActivity extends AppCompatActivity {
     }
     // Método para cargar los ejercicios en el Spinner
     private void cargarEjercicios() {
-        listaEjercicios = ejercicioController.obtenerTodosLosEjerciciosConRelaciones();
+        listaEjercicios = ejercicioNegocio.obtenerTodosLosEjerciciosConRelaciones();
         List<String> nombresEjercicios = new ArrayList<>();
 
         for (Ejercicio ejercicio : listaEjercicios) {
@@ -106,7 +105,7 @@ public class DetalleEjercicioActivity extends AppCompatActivity {
         detalleEjercicio.setSeries(series);
         detalleEjercicio.setRepeticiones(repeticiones);
 
-        long result = detalleEjercicioController.crearNuevoDetalleEjercicio(detalleEjercicio);
+        long result = detalleEjercicioNegocio.agregarDetalleEjercicio(detalleEjercicio);
         if (result != -1) {
             Toast.makeText(this, "Ejercicio guardado correctamente.", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Enviar resultado de éxito

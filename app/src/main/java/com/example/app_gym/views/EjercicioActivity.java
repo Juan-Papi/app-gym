@@ -8,22 +8,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
-
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.EjercicioController;
-import com.example.app_gym.controllers.CategoriaController;
-import com.example.app_gym.controllers.VideoController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Categoria;
 import com.example.app_gym.models.Ejercicio;
 import com.example.app_gym.models.Video;
+import com.example.app_gym.negocio.CategoriaNegocio;
+import com.example.app_gym.negocio.EjercicioNegocio;
+import com.example.app_gym.negocio.VideoNegocio;
 
 import java.util.List;
 
 public class EjercicioActivity extends AppCompatActivity {
-    private EjercicioController ejercicioController;
-    private CategoriaController categoriaController;
-    private VideoController videoController;
+    private EjercicioNegocio ejercicioNegocio;
+    private CategoriaNegocio categoriaNegocio;
+    private VideoNegocio videoNegocio;
     private EditText etNombreEjercicio, etDescripcionEjercicio;
     private Spinner spinnerCategoria, spinnerVideo;
     private Button btnGuardarEjercicio;
@@ -39,9 +38,9 @@ public class EjercicioActivity extends AppCompatActivity {
         // Inicializa la base de datos y los controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ejercicioController = new EjercicioController(db);
-        categoriaController = new CategoriaController(db);
-        videoController = new VideoController(db);
+        ejercicioNegocio = new EjercicioNegocio(db);
+        categoriaNegocio= new CategoriaNegocio(db);
+        videoNegocio = new VideoNegocio(db);
 
         // Referencias a los componentes de la vista
         etNombreEjercicio = findViewById(R.id.etNombreEjercicio);
@@ -51,13 +50,13 @@ public class EjercicioActivity extends AppCompatActivity {
         btnGuardarEjercicio = findViewById(R.id.btnGuardarEjercicio);
 
         // Cargar opciones en el Spinner de Categoría
-        listaCategorias = categoriaController.obtenerTodasLasCategorias();
+        listaCategorias = categoriaNegocio.obtenerTodasLasCategorias();
         ArrayAdapter<Categoria> adapterCategorias = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
         adapterCategorias.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(adapterCategorias);
 
         // Cargar opciones en el Spinner de Video
-        listaVideos = videoController.obtenerTodosLosVideos();
+        listaVideos = videoNegocio.obtenerTodosLosVideos();
         ArrayAdapter<Video> adapterVideos = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaVideos);
         adapterVideos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerVideo.setAdapter(adapterVideos);
@@ -111,7 +110,7 @@ public class EjercicioActivity extends AppCompatActivity {
             nuevoEjercicio.setVideoId(videoId);
 
             // Guardar el ejercicio en la base de datos
-            long result = ejercicioController.crearNuevoEjercicio(nuevoEjercicio);
+            long result = ejercicioNegocio.agregarEjercicio(nuevoEjercicio);
             if (result != -1) {
                 Toast.makeText(this, "Ejercicio guardado", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);  // Indica que se guardó correctamente

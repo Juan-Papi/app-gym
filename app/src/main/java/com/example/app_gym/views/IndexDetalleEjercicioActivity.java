@@ -17,6 +17,9 @@ import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.DetalleEjercicio;
 import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.DetalleEjercicioNegocio;
+import com.example.app_gym.negocio.RutinaDiariaNegocio;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,9 +29,9 @@ import java.util.Locale;
 
 public class IndexDetalleEjercicioActivity extends AppCompatActivity {
 
-    private ClienteController clienteController;
-    private DetalleEjercicioController detalleEjercicioController;
-    private RutinaDiariaController rutinaDiariaController;
+    private ClienteNegocio clienteNegocio;
+    private DetalleEjercicioNegocio detalleEjercicioNegocio;
+    private RutinaDiariaNegocio rutinaDiariaNegocio;
     private TextView tvInformacionCliente, tvTitulo;
     private RecyclerView recyclerDetalles;
     private DetalleEjercicioAdapter detalleEjercicioAdapter;
@@ -43,9 +46,9 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        detalleEjercicioController = new DetalleEjercicioController(dbHelper.getWritableDatabase());
-        rutinaDiariaController = new RutinaDiariaController(dbHelper.getWritableDatabase());
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        detalleEjercicioNegocio = new DetalleEjercicioNegocio(dbHelper.getWritableDatabase());
+        rutinaDiariaNegocio= new RutinaDiariaNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
 
         // Obtener los IDs del cliente y de la rutina diaria desde el Intent
         clienteId = getIntent().getIntExtra("cliente_id", -1);
@@ -56,14 +59,14 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
         tvTitulo = findViewById(R.id.tvTitulo);
 
         // Obtener la información del cliente y mostrarla
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
         if (cliente != null) {
             mostrarInformacionCliente(cliente);
         }
 
         // Obtener la rutina diaria y establecer el título
         // Obtener la rutina diaria y establecer el título
-        RutinaDiaria rutinaDiaria = rutinaDiariaController.obtenerRutinaDiaria(rutinaDiariaId);
+        RutinaDiaria rutinaDiaria = rutinaDiariaNegocio.obtenerRutinaDiaria(rutinaDiariaId);
         if (rutinaDiaria != null) {
             try {
                 // Establecer el formato de fecha de entrada
@@ -86,7 +89,7 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
         recyclerDetalles.setLayoutManager(new LinearLayoutManager(this));
 
         // Obtener la lista de detalles de ejercicio de la rutina diaria
-        listaDetallesEjercicio = detalleEjercicioController.obtenerDetallesDeEjercicio(rutinaDiariaId);
+        listaDetallesEjercicio = detalleEjercicioNegocio.obtenerDetallesDeEjercicio(rutinaDiariaId);
 
         // Configurar el adaptador
         detalleEjercicioAdapter = new DetalleEjercicioAdapter(listaDetallesEjercicio, new DetalleEjercicioAdapter.OnDetalleEjercicioClickListener() {
@@ -108,7 +111,7 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
                         .setMessage("¿Estás seguro de que deseas eliminar este detalle de ejercicio?")
                         .setPositiveButton("Sí", (dialog, which) -> {
                             // Realizar la acción de eliminación
-                            int resultado = detalleEjercicioController.eliminarDetalleEjercicio(detalleEjercicio.getId());
+                            int resultado = detalleEjercicioNegocio.eliminarDetalleEjercicio(detalleEjercicio.getId());
                             if (resultado > 0) {
                                 listaDetallesEjercicio.remove(position);
                                 detalleEjercicioAdapter.notifyItemRemoved(position);
@@ -158,7 +161,7 @@ public class IndexDetalleEjercicioActivity extends AppCompatActivity {
     // Método para actualizar la lista de detalles de ejercicios
     private void actualizarListaDetalles() {
         listaDetallesEjercicio.clear();
-        listaDetallesEjercicio.addAll(detalleEjercicioController.obtenerDetallesDeEjercicio(rutinaDiariaId));
+        listaDetallesEjercicio.addAll(detalleEjercicioNegocio.obtenerDetallesDeEjercicio(rutinaDiariaId));
         detalleEjercicioAdapter.notifyDataSetChanged();
     }
 }

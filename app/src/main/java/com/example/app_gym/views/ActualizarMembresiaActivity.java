@@ -7,20 +7,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.MembresiaController;
-import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.Membresia;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.MembresiaNegocio;
 
 import java.util.Calendar;
 
 public class ActualizarMembresiaActivity extends AppCompatActivity {
 
-    private MembresiaController membresiaController;
-    private ClienteController clienteController;
+    private MembresiaNegocio membresiaNegocio;
+    private ClienteNegocio clienteNegocio;
     private EditText etFechaInicio, etFechaVence;
     private TextView tvInformacionCliente;
     private int clienteId, membresiaId;
@@ -32,8 +31,8 @@ public class ActualizarMembresiaActivity extends AppCompatActivity {
 
         // Inicializa la base de datos y los controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        membresiaController = new MembresiaController(dbHelper.getWritableDatabase());
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        membresiaNegocio = new MembresiaNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
 
         // Obtiene el clienteId y membresiaId de la intención
         clienteId = getIntent().getIntExtra("cliente_id", -1);
@@ -62,7 +61,7 @@ public class ActualizarMembresiaActivity extends AppCompatActivity {
     }
 
     private void mostrarInformacionCliente() {
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
 
         if (cliente != null) {
             String informacion = cliente.getNombre() + " " + cliente.getApellido() + "\n" +
@@ -73,7 +72,7 @@ public class ActualizarMembresiaActivity extends AppCompatActivity {
     }
 
     private void cargarDatosMembresia() {
-        Membresia membresia = membresiaController.obtenerMembresia(membresiaId);
+        Membresia membresia = membresiaNegocio.obtenerMembresia(membresiaId);
 
         if (membresia != null) {
             etFechaInicio.setText(membresia.getFechaInicio());
@@ -116,7 +115,7 @@ public class ActualizarMembresiaActivity extends AppCompatActivity {
         membresia.setFechaVencimiento(fechaVence);
         membresia.setClienteId(clienteId);
 
-        int result = membresiaController.actualizarMembresia(membresia);
+        int result = membresiaNegocio.actualizarMembresia(membresia);
         if (result > 0) {
             Toast.makeText(this, "Membresía actualizada correctamente", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);

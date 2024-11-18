@@ -4,25 +4,22 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
-import com.example.app_gym.controllers.RutinaSemanalController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.RutinaSemanal;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.RutinaSemanalNegocio;
 
 import java.util.List;
 public class IndexSemanaActivity extends AppCompatActivity {
 
-    private ClienteController clienteController;
-    private RutinaSemanalController rutinaSemanalController;
+    private ClienteNegocio clienteNegocio;
+    private RutinaSemanalNegocio rutinaSemanalNegocio;
     private TextView tvInformacionCliente;
     private RecyclerView recyclerSemanas;
     private RutinaSemanalAdapter rutinaSemanalAdapter;
@@ -38,14 +35,14 @@ public class IndexSemanaActivity extends AppCompatActivity {
         // Inicializar la base de datos y controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase(); // Obtén la instancia de la base de datos
-        clienteController = new ClienteController(db);
-        rutinaSemanalController = new RutinaSemanalController(db);
+        clienteNegocio = new ClienteNegocio(db);
+        rutinaSemanalNegocio = new RutinaSemanalNegocio(db);
 
         tvInformacionCliente = findViewById(R.id.tvInformacionCliente);
         clienteId = getIntent().getIntExtra("cliente_id", -1);
 
         if (clienteId != -1) {
-            Cliente cliente = clienteController.obtenerCliente(clienteId);
+            Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
             if (cliente != null) {
                 mostrarInformacionCliente(cliente);
             }
@@ -54,7 +51,7 @@ public class IndexSemanaActivity extends AppCompatActivity {
         recyclerSemanas = findViewById(R.id.recyclerSemanas);
         recyclerSemanas.setLayoutManager(new LinearLayoutManager(this));
 
-        listaRutinasSemanales = rutinaSemanalController.obtenerRutinasSemanalesDeCliente(clienteId);
+        listaRutinasSemanales = rutinaSemanalNegocio.obtenerRutinasSemanalesDeCliente(clienteId);
         rutinaSemanalAdapter = new RutinaSemanalAdapter(listaRutinasSemanales, this, clienteId, db); // Pasa la instancia de la base de datos
         recyclerSemanas.setAdapter(rutinaSemanalAdapter);
 
@@ -84,7 +81,7 @@ public class IndexSemanaActivity extends AppCompatActivity {
 
     private void actualizarListaRutinasSemanales() {
         listaRutinasSemanales.clear();
-        listaRutinasSemanales.addAll(rutinaSemanalController.obtenerRutinasSemanalesDeCliente(clienteId));
+        listaRutinasSemanales.addAll(rutinaSemanalNegocio.obtenerRutinasSemanalesDeCliente(clienteId));
         rutinaSemanalAdapter.notifyDataSetChanged();
     }
 

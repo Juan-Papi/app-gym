@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
-import com.example.app_gym.controllers.MembresiaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
 import com.example.app_gym.models.Membresia;
+import com.example.app_gym.negocio.ClienteNegocio;
+import com.example.app_gym.negocio.MembresiaNegocio;
 
 import java.util.List;
 
@@ -24,8 +24,8 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
     private RecyclerView recyclerMembresias;
     private MembresiaAdapter membresiaAdapter;
     private List<Membresia> listaMembresias;
-    private MembresiaController membresiaController;
-    private ClienteController clienteController;
+    private MembresiaNegocio membresiaNegocio;
+    private ClienteNegocio clienteNegocio;
     private int clienteId;
     private TextView tvInformacionCliente; // TextView para mostrar la información del cliente
 
@@ -36,8 +36,8 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
 
         // Inicializa la base de datos y los controladores
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        membresiaController = new MembresiaController(dbHelper.getWritableDatabase());
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        membresiaNegocio = new MembresiaNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
 
         // Obtiene el clienteId de la intención
         clienteId = getIntent().getIntExtra("cliente_id", -1);
@@ -50,7 +50,7 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
         recyclerMembresias = findViewById(R.id.recyclerMembresias);
         recyclerMembresias.setLayoutManager(new LinearLayoutManager(this));
 
-        listaMembresias = membresiaController.obtenerMembresiasPorCliente(clienteId);
+        listaMembresias = membresiaNegocio.obtenerMembresiasPorCliente(clienteId);
         membresiaAdapter = new MembresiaAdapter(listaMembresias, this);
         recyclerMembresias.setAdapter(membresiaAdapter);
 
@@ -76,7 +76,7 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
         if (resultCode == RESULT_OK) {
             // Actualiza la lista de membresías si se agregó o editó una membresía
             listaMembresias.clear();
-            listaMembresias.addAll(membresiaController.obtenerMembresiasPorCliente(clienteId));
+            listaMembresias.addAll(membresiaNegocio.obtenerMembresiasPorCliente(clienteId));
             membresiaAdapter.notifyDataSetChanged();
         }
     }
@@ -84,7 +84,7 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
 
     // Método para mostrar la información del cliente
     private void mostrarInformacionCliente() {
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
 
         if (cliente != null) {
             String informacion = cliente.getNombre() + " " + cliente.getApellido() + "\n" +
@@ -118,7 +118,7 @@ public class IndexMembresiaActivity extends AppCompatActivity implements Membres
                 .setMessage("¿Estás seguro de que deseas eliminar esta membresía?")
                 .setPositiveButton("Sí", (dialog, which) -> {
                     // Llama al controlador para eliminar la membresía
-                    int resultado = membresiaController.eliminarMembresia(membresiaSeleccionada.getId());
+                    int resultado = membresiaNegocio.eliminarMembresia(membresiaSeleccionada.getId());
 
                     if (resultado > 0) {
                         // Elimina la membresía de la lista y notifica al adaptador

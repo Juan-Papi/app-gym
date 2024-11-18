@@ -6,19 +6,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.RutinaDiariaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.negocio.RutinaDiariaNegocio;
+
 import java.util.Calendar;
 import java.util.List;
 
 public class DiaActivity extends AppCompatActivity {
 
-    private RutinaDiariaController rutinaDiariaController;
+    private RutinaDiariaNegocio rutinaDiariaNegocio;
     private Spinner spinnerDias;
     private EditText etFecha;
     private int semanaId;
@@ -31,13 +31,13 @@ public class DiaActivity extends AppCompatActivity {
 
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        rutinaDiariaController = new RutinaDiariaController(dbHelper.getWritableDatabase());
+        rutinaDiariaNegocio = new RutinaDiariaNegocio(dbHelper.getWritableDatabase());
 
         // Obtener el semanaId desde el Intent
         semanaId = getIntent().getIntExtra("semana_id", -1);
 
         // Cargar las rutinas diarias existentes para validar los días
-        listaRutinasDiarias = rutinaDiariaController.obtenerRutinasDiariasDeSemana(semanaId);
+        listaRutinasDiarias = rutinaDiariaNegocio.obtenerRutinasDiariasDeSemana(semanaId);
 
         // Referenciar los elementos de la vista
         spinnerDias = findViewById(R.id.spinnerDias);
@@ -99,7 +99,7 @@ public class DiaActivity extends AppCompatActivity {
         nuevaRutinaDiaria.setFecha(fecha);
         nuevaRutinaDiaria.setRutinaSemanalId(semanaId);
 
-        long result = rutinaDiariaController.crearNuevaRutinaDiaria(nuevaRutinaDiaria);
+        long result = rutinaDiariaNegocio.agregarRutinaDiaria(nuevaRutinaDiaria);
         if (result != -1) {
             Toast.makeText(this, "Día guardado correctamente.", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK); // Establecer el resultado como RESULT_OK

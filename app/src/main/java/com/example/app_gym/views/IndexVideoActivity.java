@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.VideoController;
 import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Categoria;
 import com.example.app_gym.models.Video;
-import com.example.app_gym.views.VideoAdapter;
+import com.example.app_gym.negocio.VideoNegocio;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class IndexVideoActivity extends AppCompatActivity {
     private RecyclerView recyclerVideos;
     private VideoAdapter videoAdapter;
     private List<Video> listaVideos;
-    private VideoController videoController;
+    private VideoNegocio videoNegocio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +30,14 @@ public class IndexVideoActivity extends AppCompatActivity {
 
         // Inicializamos la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        videoController = new VideoController(dbHelper.getWritableDatabase());
+        videoNegocio = new VideoNegocio(dbHelper.getWritableDatabase());
 
         // Referenciamos el RecyclerView
         recyclerVideos = findViewById(R.id.recyclerVideos);
         recyclerVideos.setLayoutManager(new LinearLayoutManager(this));
 
         // Obtenemos la lista de videos desde el controlador
-        listaVideos = videoController.obtenerTodosLosVideos();
+        listaVideos = videoNegocio.obtenerTodosLosVideos();
 
         // Configuramos el adapter
         videoAdapter = new VideoAdapter(listaVideos);
@@ -71,7 +69,7 @@ public class IndexVideoActivity extends AppCompatActivity {
     }
 
     private void actualizarListaVideos() {
-        List<Video> videosActualizados = videoController.obtenerTodosLosVideos();
+        List<Video> videosActualizados = videoNegocio.obtenerTodosLosVideos();
         // Asumiendo que ya tienes un método en tu adaptador para actualizar la lista
         ((VideoAdapter)recyclerVideos.getAdapter()).actualizarVideos(videosActualizados);
     }

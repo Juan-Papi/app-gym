@@ -12,15 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.RutinaDiariaController;
-import com.example.app_gym.controllers.RutinaSemanalController;
 import com.example.app_gym.models.RutinaSemanal;
+import com.example.app_gym.negocio.RutinaDiariaNegocio;
+import com.example.app_gym.negocio.RutinaSemanalNegocio;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
@@ -84,7 +82,7 @@ public class RutinaSemanalAdapter extends RecyclerView.Adapter<RutinaSemanalAdap
                     .setTitle("Eliminar Rutina Semanal")
                     .setMessage("¿Estás seguro de que deseas eliminar esta rutina semanal?")
                     .setPositiveButton("Sí", (dialog, which) -> {
-                        RutinaSemanalController rutinaSemanalController = new RutinaSemanalController(db);
+                        RutinaSemanalNegocio rutinaSemanalController = new RutinaSemanalNegocio(db);
 
                         int resultado = rutinaSemanalController.eliminarRutinaSemanal(rutinaSemanal.getId());
                         if (resultado > 0) {
@@ -145,7 +143,7 @@ public class RutinaSemanalAdapter extends RecyclerView.Adapter<RutinaSemanalAdap
             document.add(fecha);
 
             // Obtener rutinas diarias y sus detalles
-            RutinaDiariaController rutinaDiariaController = new RutinaDiariaController(db);
+            RutinaDiariaNegocio rutinaDiariaController = new RutinaDiariaNegocio(db);
             List<Map<String, Object>> rutinasDiariasConDetalles = rutinaDiariaController.obtenerRutinasDiariasConRelaciones(rutinaSemanal.getId());
 
             // Agrupar los detalles de ejercicios por rutinaDiariaId

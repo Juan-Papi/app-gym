@@ -11,14 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
+import com.example.app_gym.negocio.ClienteNegocio;
 
 import java.util.Calendar;
 
 public class ActualizarClienteActivity extends AppCompatActivity {
-    private ClienteController clienteController;
+    private ClienteNegocio clienteNegocio;
     private EditText etNombre, etApellido, etEdad, etFechaEntrada, etObs;
     private Spinner spinnerEstado;
     private Button btnGuardar, btnVolver;
@@ -32,7 +32,7 @@ public class ActualizarClienteActivity extends AppCompatActivity {
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        clienteController = new ClienteController(db);
+        clienteNegocio = new ClienteNegocio(db);
 
         // Referenciar los elementos de la vista
         etNombre = findViewById(R.id.etNombre);
@@ -54,7 +54,7 @@ public class ActualizarClienteActivity extends AppCompatActivity {
         clienteId = getIntent().getIntExtra("cliente_id", -1);
 
         // Cargar los datos del cliente
-        Cliente cliente = clienteController.obtenerCliente(clienteId);
+        Cliente cliente = clienteNegocio.obtenerCliente(clienteId);
         if (cliente != null) {
             cargarDatosCliente(cliente);
         }
@@ -124,7 +124,7 @@ public class ActualizarClienteActivity extends AppCompatActivity {
         cliente.setFechaEntrada(fechaEntrada);
         cliente.setObs(obs);
 
-        int resultado = clienteController.actualizarCliente(cliente);
+        int resultado = clienteNegocio.actualizarCliente(cliente);
         if (resultado > 0) {
             Toast.makeText(this, "Cliente actualizado correctamente", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);  // Indica que la operación fue exitosa

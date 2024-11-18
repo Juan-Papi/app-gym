@@ -5,16 +5,13 @@ import android.content.Intent; // Agregar esta importación
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.app_gym.R;
-import com.example.app_gym.controllers.ClienteController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Cliente;
+import com.example.app_gym.negocio.ClienteNegocio;
 import com.example.app_gym.views.ActualizarClienteActivity;
 import com.example.app_gym.views.ClienteActivity;
 import com.example.app_gym.views.ClienteAdapter;
@@ -28,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
     private RecyclerView recyclerClientes;
     private ClienteAdapter clienteAdapter;
     private List<Cliente> listaClientes;
-    private ClienteController clienteController;
+    private ClienteNegocio clienteNegocio;
     private static final int REQUEST_CODE_ADD_CLIENTE = 1;  // Código de solicitud para agregar un cliente
 
     @Override
@@ -38,14 +35,14 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
 
         // Inicializamos la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        clienteController = new ClienteController(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
 
         // Referenciamos el RecyclerView
         recyclerClientes = findViewById(R.id.recyclerClientes);
         recyclerClientes.setLayoutManager(new LinearLayoutManager(this));
 
         // Obtenemos la lista de clientes desde el controlador
-        listaClientes = clienteController.obtenerTodosLosClientes();
+        listaClientes = clienteNegocio.obtenerTodosLosClientes();
 
         // Configuramos el adapter y lo asociamos al RecyclerView
         clienteAdapter = new ClienteAdapter(listaClientes, this);
@@ -95,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
                 .setMessage("¿Estás seguro de que deseas eliminar a " + cliente.getNombre() + " " + cliente.getApellido() + "?")
                 .setPositiveButton("Sí", (dialog, which) -> {
                     // Eliminar el cliente de la base de datos
-                    int result = clienteController.eliminarCliente(cliente.getId());
+                    int result = clienteNegocio.eliminarCliente(cliente.getId());
 
                     if (result > 0) {
                         // Recargar la lista de clientes desde la base de datos
                         listaClientes.clear();
-                        listaClientes.addAll(clienteController.obtenerTodosLosClientes());
+                        listaClientes.addAll(clienteNegocio.obtenerTodosLosClientes());
 
                         // Notificar al adaptador que los datos han cambiado
                         clienteAdapter.notifyDataSetChanged();
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
         if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_ADD_CLIENTE)) {
             // Cliente agregado o actualizado, recargar la lista de clientes
             listaClientes.clear();
-            listaClientes.addAll(clienteController.obtenerTodosLosClientes());
+            listaClientes.addAll(clienteNegocio.obtenerTodosLosClientes());
             clienteAdapter.notifyDataSetChanged();
         }
     }

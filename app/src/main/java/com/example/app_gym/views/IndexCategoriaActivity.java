@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.CategoriaController;
 import com.example.app_gym.datos.DatabaseHelper;
 import com.example.app_gym.models.Categoria;
+import com.example.app_gym.negocio.CategoriaNegocio;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class IndexCategoriaActivity extends AppCompatActivity {
     private RecyclerView recyclerCategorias;
     private CategoriaAdapter categoriaAdapter;
     private List<Categoria> listaCategorias;
-    private CategoriaController categoriaController;
+    private CategoriaNegocio categoriaNegocio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,14 @@ public class IndexCategoriaActivity extends AppCompatActivity {
 
         // Inicializamos la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        categoriaController = new CategoriaController(dbHelper.getWritableDatabase());
+        categoriaNegocio = new CategoriaNegocio(dbHelper.getWritableDatabase());
 
         // Referenciamos el RecyclerView
         recyclerCategorias = findViewById(R.id.recyclerCategorias);
         recyclerCategorias.setLayoutManager(new LinearLayoutManager(this));
 
         // Obtenemos la lista de categorías desde el controlador
-        listaCategorias = categoriaController.obtenerTodasLasCategorias();
+        listaCategorias = categoriaNegocio.obtenerTodasLasCategorias();
 
         // Configuramos el adapter
         categoriaAdapter = new CategoriaAdapter(listaCategorias);
@@ -70,7 +70,7 @@ public class IndexCategoriaActivity extends AppCompatActivity {
     }
 
     private void actualizarListaCategorias() {
-        List<Categoria> categoriasActualizadas = categoriaController.obtenerTodasLasCategorias();
+        List<Categoria> categoriasActualizadas = categoriaNegocio.obtenerTodasLasCategorias();
         // Asumiendo que ya tienes un método en tu adaptador para actualizar la lista
         ((CategoriaAdapter)recyclerCategorias.getAdapter()).actualizarCategorias(categoriasActualizadas);
     }

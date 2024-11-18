@@ -14,22 +14,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.controllers.EjercicioController;
 import com.example.app_gym.models.Categoria;
 import com.example.app_gym.models.Ejercicio;
 import com.example.app_gym.models.Video;
+import com.example.app_gym.negocio.CategoriaNegocio;
+import com.example.app_gym.negocio.EjercicioNegocio;
+import com.example.app_gym.negocio.VideoNegocio;
 
 import java.util.List;
 
 public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.EjercicioViewHolder> {
 
     private List<Ejercicio> listaEjercicios;
-    private EjercicioController ejercicioController;
+    private EjercicioNegocio ejercicioNegocio;
+    private VideoNegocio videoNegocio;
+    private CategoriaNegocio categoriaNegocio;
     private Context context; // Añadir una variable de instancia para el contexto
 
-    public EjercicioAdapter(List<Ejercicio> listaEjercicios, EjercicioController ejercicioController, Context context) {
+    public EjercicioAdapter(List<Ejercicio> listaEjercicios, EjercicioNegocio ejercicioNegocio, Context context) {
         this.listaEjercicios = listaEjercicios;
-        this.ejercicioController = ejercicioController;
+        this.ejercicioNegocio = ejercicioNegocio;
         this.context = context; // Inicializar la variable de contexto
     }
 
@@ -49,8 +53,8 @@ public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.Ejer
         holder.tvDescripcionEjercicio.setText(ejercicio.getDescripcion());
 
         // Obtener el nombre de la categoría y el URL del video
-        Categoria categoria = ejercicioController.obtenerCategoriaPorId(ejercicio.getCategoriaId());
-        Video video = ejercicioController.obtenerVideoPorId(ejercicio.getVideoId());
+        Categoria categoria = categoriaNegocio.obtenerCategoriaPorId(ejercicio.getCategoriaId());
+        Video video = videoNegocio.obtenerVideoPorId(ejercicio.getVideoId());
 
         if (categoria != null) {
             holder.tvCategoriaNombre.setText(categoria.getNombre());
@@ -77,7 +81,7 @@ public class EjercicioAdapter extends RecyclerView.Adapter<EjercicioAdapter.Ejer
                     .setTitle("Eliminar Ejercicio")
                     .setMessage("¿Estás seguro de que deseas eliminar este ejercicio?")
                     .setPositiveButton("Sí", (dialog, which) -> {
-                        int result = ejercicioController.eliminarEjercicio(ejercicio.getId());
+                        int result = ejercicioNegocio.eliminarEjercicio(ejercicio.getId());
 
                         if (result > 0) {
                             listaEjercicios.remove(position);
