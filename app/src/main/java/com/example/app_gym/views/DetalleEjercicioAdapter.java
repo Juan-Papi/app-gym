@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.models.DetalleEjercicio;
+import com.example.app_gym.entities.DetalleEjercicio;
 import java.util.List;
 
 public class DetalleEjercicioAdapter extends RecyclerView.Adapter<DetalleEjercicioAdapter.DetalleEjercicioViewHolder> {

@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Cliente;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.Cliente;
 import com.example.app_gym.negocio.ClienteNegocio;
 
 import java.util.Calendar;

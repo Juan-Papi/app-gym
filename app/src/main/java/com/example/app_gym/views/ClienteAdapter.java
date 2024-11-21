@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.models.Cliente;
+import com.example.app_gym.entities.Cliente;
 
 import java.util.List;
 

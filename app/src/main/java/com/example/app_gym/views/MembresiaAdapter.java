@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.models.Membresia;
+import com.example.app_gym.entities.Membresia;
 import java.util.List;
 
 public class MembresiaAdapter extends RecyclerView.Adapter<MembresiaAdapter.MembresiaViewHolder> {

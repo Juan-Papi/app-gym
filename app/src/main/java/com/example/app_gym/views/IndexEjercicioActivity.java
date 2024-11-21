@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Ejercicio;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.Ejercicio;
 import com.example.app_gym.negocio.EjercicioNegocio;
 
 import java.util.List;

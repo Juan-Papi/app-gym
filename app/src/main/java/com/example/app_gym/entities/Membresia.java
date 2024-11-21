@@ -1,4 +1,4 @@
-package com.example.app_gym.models;
+package com.example.app_gym.entities;
 
 public class Membresia {
     private int id;

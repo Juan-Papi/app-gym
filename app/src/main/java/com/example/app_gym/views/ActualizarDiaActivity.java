@@ -9,8 +9,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.RutinaDiaria;
 import com.example.app_gym.negocio.RutinaDiariaNegocio;
 
 import java.util.Calendar;

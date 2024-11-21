@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.entities.RutinaDiaria;
 import java.util.List;
 
 public class RutinaDiariaAdapter extends RecyclerView.Adapter<RutinaDiariaAdapter.RutinaDiariaViewHolder> {

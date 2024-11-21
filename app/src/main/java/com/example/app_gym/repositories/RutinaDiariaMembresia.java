@@ -1,10 +1,10 @@
-package com.example.app_gym.datos;
+package com.example.app_gym.repositories;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.entities.RutinaDiaria;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RutinaDiariaDatos {
+public class RutinaDiariaMembresia {
     private SQLiteDatabase db;
 
-    public RutinaDiariaDatos(SQLiteDatabase db) {
+    public RutinaDiariaMembresia(SQLiteDatabase db) {
         this.db = db;
     }
 

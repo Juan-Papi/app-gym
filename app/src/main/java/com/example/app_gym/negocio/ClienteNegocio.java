@@ -2,39 +2,39 @@ package com.example.app_gym.negocio;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.datos.ClienteDatos;
-import com.example.app_gym.models.Cliente;
+import com.example.app_gym.repositories.ClienteRepository;
+import com.example.app_gym.entities.Cliente;
 
 import java.util.List;
 
 public class ClienteNegocio {
-    private ClienteDatos clienteDatos;
+    private ClienteRepository clienteRepository;
 
     public ClienteNegocio(SQLiteDatabase db) {
-        this.clienteDatos = new ClienteDatos(db);
+        this.clienteRepository = new ClienteRepository(db);
     }
 
     // Método para agregar un nuevo cliente
     public long agregarCliente(Cliente cliente) {
-        return clienteDatos.insertarCliente(cliente);
+        return clienteRepository.insertarCliente(cliente);
     }
 
     // Método para actualizar un cliente existente
     public int actualizarCliente(Cliente cliente) {
-        return clienteDatos.actualizarCliente(cliente);
+        return clienteRepository.actualizarCliente(cliente);
     }
 
     // Método para eliminar un cliente
     public int eliminarCliente(int clienteId) {
-        return clienteDatos.eliminarCliente(clienteId);
+        return clienteRepository.eliminarCliente(clienteId);
     }
 
     // Método para obtener un cliente por su ID
     public Cliente obtenerCliente(int clienteId) {
-        return clienteDatos.obtenerCliente(clienteId);
+        return clienteRepository.obtenerCliente(clienteId);
     }
 
     public List<Cliente> obtenerTodosLosClientes() {
-        return clienteDatos.obtenerTodosLosClientes();
+        return clienteRepository.obtenerTodosLosClientes();
     }
 }

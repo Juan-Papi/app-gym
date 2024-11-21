@@ -14,9 +14,9 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Cliente;
-import com.example.app_gym.models.RutinaDiaria;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.Cliente;
+import com.example.app_gym.entities.RutinaDiaria;
 import java.util.List;
 
 import com.example.app_gym.negocio.ClienteNegocio;

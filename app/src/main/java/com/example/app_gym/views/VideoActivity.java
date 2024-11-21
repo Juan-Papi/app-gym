@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Video;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.Video;
 import com.example.app_gym.negocio.VideoNegocio;
 
 public class VideoActivity extends AppCompatActivity {

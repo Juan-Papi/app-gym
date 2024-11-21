@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.models.RutinaSemanal;
+import com.example.app_gym.entities.RutinaSemanal;
 import com.example.app_gym.negocio.RutinaDiariaNegocio;
 import com.example.app_gym.negocio.RutinaSemanalNegocio;
 import com.itextpdf.kernel.pdf.PdfDocument;

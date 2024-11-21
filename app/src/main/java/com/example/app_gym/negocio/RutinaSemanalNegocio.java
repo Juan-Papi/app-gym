@@ -2,39 +2,39 @@ package com.example.app_gym.negocio;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.datos.RutinaSemanalDatos;
-import com.example.app_gym.models.RutinaSemanal;
+import com.example.app_gym.repositories.RutinaSemanalRepository;
+import com.example.app_gym.entities.RutinaSemanal;
 
 import java.util.List;
 
 public class RutinaSemanalNegocio {
-    private RutinaSemanalDatos rutinaSemanalDatos;
+    private RutinaSemanalRepository rutinaSemanalRepository;
 
     public RutinaSemanalNegocio(SQLiteDatabase db) {
-        this.rutinaSemanalDatos = new RutinaSemanalDatos(db);
+        this.rutinaSemanalRepository = new RutinaSemanalRepository(db);
     }
 
     // Método para agregar una nueva rutina semanal
     public long agregarRutinaSemanal(RutinaSemanal rutinaSemanal) {
-        return rutinaSemanalDatos.insertarRutinaSemanal(rutinaSemanal);
+        return rutinaSemanalRepository.insertarRutinaSemanal(rutinaSemanal);
     }
 
     // Método para actualizar una rutina semanal existente
     public int actualizarRutinaSemanal(RutinaSemanal rutinaSemanal) {
-        return rutinaSemanalDatos.actualizarRutinaSemanal(rutinaSemanal);
+        return rutinaSemanalRepository.actualizarRutinaSemanal(rutinaSemanal);
     }
 
     // Método para eliminar una rutina semanal
     public int eliminarRutinaSemanal(int rutinaSemanalId) {
-        return rutinaSemanalDatos.eliminarRutinaSemanal(rutinaSemanalId);
+        return rutinaSemanalRepository.eliminarRutinaSemanal(rutinaSemanalId);
     }
 
     // Método para obtener una rutina semanal por su ID
     public RutinaSemanal obtenerRutinaSemanal(int rutinaSemanalId) {
-        return rutinaSemanalDatos.obtenerRutinaSemanal(rutinaSemanalId);
+        return rutinaSemanalRepository.obtenerRutinaSemanal(rutinaSemanalId);
     }
 
     public List<RutinaSemanal> obtenerRutinasSemanalesDeCliente(int clienteId) {
-        return rutinaSemanalDatos.obtenerRutinasSemanalesDeCliente(clienteId);
+        return rutinaSemanalRepository.obtenerRutinasSemanalesDeCliente(clienteId);
     }
 }

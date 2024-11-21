@@ -1,18 +1,18 @@
-package com.example.app_gym.datos;
+package com.example.app_gym.repositories;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.models.Membresia;
+import com.example.app_gym.entities.Membresia;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MembresiaDatos {
+public class MembresiaRepository {
     private SQLiteDatabase db;
 
-    public MembresiaDatos(SQLiteDatabase db) {
+    public MembresiaRepository(SQLiteDatabase db) {
         this.db = db;
     }
 

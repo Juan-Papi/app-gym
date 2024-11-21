@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.models.Categoria;
-import com.example.app_gym.models.Ejercicio;
-import com.example.app_gym.models.Video;
+import com.example.app_gym.entities.Categoria;
+import com.example.app_gym.entities.Ejercicio;
+import com.example.app_gym.entities.Video;
 import com.example.app_gym.negocio.CategoriaNegocio;
 import com.example.app_gym.negocio.EjercicioNegocio;
 import com.example.app_gym.negocio.VideoNegocio;

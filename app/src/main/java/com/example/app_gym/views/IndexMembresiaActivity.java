@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Cliente;
-import com.example.app_gym.models.Membresia;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.Cliente;
+import com.example.app_gym.entities.Membresia;
 import com.example.app_gym.negocio.ClienteNegocio;
 import com.example.app_gym.negocio.MembresiaNegocio;
 

@@ -1,6 +1,4 @@
-package com.example.app_gym.models;
-
-import java.util.Objects;
+package com.example.app_gym.entities;
 
 public class Categoria {
     private int id;

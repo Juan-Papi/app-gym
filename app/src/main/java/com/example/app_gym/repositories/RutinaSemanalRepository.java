@@ -1,18 +1,18 @@
-package com.example.app_gym.datos;
+package com.example.app_gym.repositories;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.models.RutinaSemanal;
+import com.example.app_gym.entities.RutinaSemanal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RutinaSemanalDatos {
+public class RutinaSemanalRepository {
     private SQLiteDatabase db;
 
-    public RutinaSemanalDatos(SQLiteDatabase db) {
+    public RutinaSemanalRepository(SQLiteDatabase db) {
         this.db = db;
     }
 

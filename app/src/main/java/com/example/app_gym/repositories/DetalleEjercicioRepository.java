@@ -1,20 +1,20 @@
-package com.example.app_gym.datos;
+package com.example.app_gym.repositories;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.models.DetalleEjercicio;
+import com.example.app_gym.entities.DetalleEjercicio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DetalleEjercicioDatos {
+public class DetalleEjercicioRepository {
     private SQLiteDatabase db;
 
-    public DetalleEjercicioDatos(SQLiteDatabase db) {
+    public DetalleEjercicioRepository(SQLiteDatabase db) {
         this.db = db;
     }
 

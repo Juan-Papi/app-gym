@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_gym.R;
-import com.example.app_gym.datos.DatabaseHelper;
-import com.example.app_gym.models.Categoria;
+import com.example.app_gym.repositories.DatabaseHelper;
+import com.example.app_gym.entities.Categoria;
 import com.example.app_gym.negocio.CategoriaNegocio;
 
 import java.util.List;

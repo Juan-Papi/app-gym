@@ -1,18 +1,18 @@
-package com.example.app_gym.datos;
+package com.example.app_gym.repositories;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.app_gym.models.Video;
+import com.example.app_gym.entities.Video;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoDatos {
+public class VideoRepository {
     private SQLiteDatabase db;
 
-    public VideoDatos(SQLiteDatabase db) {
+    public VideoRepository(SQLiteDatabase db) {
         this.db = db;
     }
 
