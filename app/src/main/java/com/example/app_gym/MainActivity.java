@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.app_gym.interfaces.IClienteNegocio;
+import com.example.app_gym.proxies.ClienteNegocioProxy;
 import com.example.app_gym.repositories.DatabaseHelper;
 import com.example.app_gym.entities.Cliente;
 import com.example.app_gym.negocio.ClienteNegocio;
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
     private RecyclerView recyclerClientes;
     private ClienteAdapter clienteAdapter;
     private List<Cliente> listaClientes;
-    private ClienteNegocio clienteNegocio;
+    private IClienteNegocio clienteNegocio;
     private static final int REQUEST_CODE_ADD_CLIENTE = 1;  // Código de solicitud para agregar un cliente
 
     @Override
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements ClienteAdapter.On
 
         // Inicializamos la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        clienteNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
+        ClienteNegocio realNegocio = new ClienteNegocio(dbHelper.getWritableDatabase());
+        clienteNegocio = new ClienteNegocioProxy(realNegocio);
 
         // Referenciamos el RecyclerView
         recyclerClientes = findViewById(R.id.recyclerClientes);

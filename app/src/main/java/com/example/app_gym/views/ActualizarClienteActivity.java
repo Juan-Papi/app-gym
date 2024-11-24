@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.app_gym.R;
+import com.example.app_gym.interfaces.IClienteNegocio;
+import com.example.app_gym.proxies.ClienteNegocioProxy;
 import com.example.app_gym.repositories.DatabaseHelper;
 import com.example.app_gym.entities.Cliente;
 import com.example.app_gym.negocio.ClienteNegocio;
@@ -18,7 +20,7 @@ import com.example.app_gym.negocio.ClienteNegocio;
 import java.util.Calendar;
 
 public class ActualizarClienteActivity extends AppCompatActivity {
-    private ClienteNegocio clienteNegocio;
+    private IClienteNegocio clienteNegocio;
     private EditText etNombre, etApellido, etEdad, etFechaEntrada, etObs;
     private Spinner spinnerEstado;
     private Button btnGuardar, btnVolver;
@@ -32,7 +34,8 @@ public class ActualizarClienteActivity extends AppCompatActivity {
         // Inicializar la base de datos y el controlador
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        clienteNegocio = new ClienteNegocio(db);
+        ClienteNegocio realNegocio = new ClienteNegocio(db);
+        clienteNegocio = new ClienteNegocioProxy(realNegocio);
 
         // Referenciar los elementos de la vista
         etNombre = findViewById(R.id.etNombre);
